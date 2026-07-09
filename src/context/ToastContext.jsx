@@ -30,7 +30,7 @@ export function ToastProvider({ children }) {
         {toasts.map((t) => (
           <div
             key={t.id}
-            className={`pointer-events-auto flex w-full max-w-sm items-center gap-3 rounded-xl border px-4 py-3 text-sm shadow-lg backdrop-blur ${
+            className={`pointer-events-auto flex w-full max-w-sm animate-toast-in items-center gap-3 rounded-xl border px-4 py-3 text-sm shadow-lg backdrop-blur ${
               t.type === 'error'
                 ? 'border-red-200 dark:border-red-500/30 bg-red-50/95 dark:bg-red-950/90 text-red-800 dark:text-red-400'
                 : 'border-emerald-200 dark:border-emerald-500/30 bg-emerald-50/95 dark:bg-emerald-950/90 text-emerald-800 dark:text-emerald-400'

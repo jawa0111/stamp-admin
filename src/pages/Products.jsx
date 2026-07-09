@@ -125,7 +125,7 @@ export default function Products() {
         actions={
           <Link
             to="/products/new"
-            className="inline-flex items-center gap-2 rounded-xl bg-primary px-4 py-2.5 text-sm font-medium text-white transition hover:bg-primary-strong"
+            className="inline-flex items-center gap-2 rounded-xl bg-primary shadow-md shadow-primary/20 active:scale-[0.98] px-4 py-2.5 text-sm font-medium text-white transition hover:bg-primary-strong"
           >
             <Plus size={16} /> New product
           </Link>
@@ -175,7 +175,7 @@ export default function Products() {
           action={
             <Link
               to="/products/new"
-              className="inline-flex items-center gap-2 rounded-xl bg-primary px-4 py-2.5 text-sm font-medium text-white transition hover:bg-primary-strong"
+              className="inline-flex items-center gap-2 rounded-xl bg-primary shadow-md shadow-primary/20 active:scale-[0.98] px-4 py-2.5 text-sm font-medium text-white transition hover:bg-primary-strong"
             >
               <Plus size={16} /> New product
             </Link>

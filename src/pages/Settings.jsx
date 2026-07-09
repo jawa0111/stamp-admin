@@ -178,7 +178,7 @@ export default function Settings() {
             <button
               type="submit"
               disabled={pwBusy}
-              className="cursor-pointer rounded-xl bg-primary px-5 py-2.5 text-sm font-medium text-white transition hover:bg-primary-strong disabled:opacity-50"
+              className="cursor-pointer rounded-xl bg-primary shadow-md shadow-primary/20 active:scale-[0.98] px-5 py-2.5 text-sm font-medium text-white transition hover:bg-primary-strong disabled:opacity-50"
             >
               {pwBusy ? 'Updating…' : 'Update password'}
             </button>
@@ -200,7 +200,7 @@ export default function Settings() {
                 <button
                   type="submit"
                   disabled={busy || !newCat.trim()}
-                  className="inline-flex shrink-0 cursor-pointer items-center gap-1.5 rounded-xl bg-primary px-4 py-2 text-sm font-medium text-white transition hover:bg-primary-strong disabled:opacity-50"
+                  className="inline-flex shrink-0 cursor-pointer items-center gap-1.5 rounded-xl bg-primary shadow-md shadow-primary/20 active:scale-[0.98] px-4 py-2 text-sm font-medium text-white transition hover:bg-primary-strong disabled:opacity-50"
                 >
                   <Plus size={15} /> Add
                 </button>

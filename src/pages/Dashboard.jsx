@@ -215,19 +215,55 @@ export default function Dashboard() {
       />
 
       {/* Metric cards */}
-      <div className="grid grid-cols-2 gap-3 sm:gap-4 xl:grid-cols-3">
-        <MetricCard
-          icon={Banknote}
-          label="Today's revenue"
-          value={formatMoney(metrics.todayRevenue)}
-          tone="green"
-        />
-        <MetricCard
-          icon={CalendarDays}
-          label="Revenue this month"
-          value={formatMoney(metrics.monthRevenue)}
-          tone="blue"
-        />
+      <div className="grid animate-fade-up grid-cols-2 gap-3 sm:gap-4 xl:grid-cols-4">
+        {/* Hero revenue card */}
+        <div className="relative col-span-2 overflow-hidden rounded-2xl bg-gradient-to-br from-indigo-600 via-indigo-600 to-violet-600 p-5 text-white shadow-lg shadow-indigo-600/25 sm:p-6">
+          <div
+            aria-hidden
+            className="absolute -right-10 -top-16 size-52 rounded-full bg-white/10 blur-2xl"
+          />
+          <div className="relative flex h-full flex-col justify-between gap-4">
+            <div className="flex items-start justify-between gap-3">
+              <div>
+                <p className="text-[13px] font-medium text-indigo-100">Revenue this month</p>
+                <p className="mt-1.5 font-display text-3xl font-semibold tracking-tight sm:text-4xl">
+                  {formatMoney(metrics.monthRevenue)}
+                </p>
+              </div>
+              <span className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-white/15 backdrop-blur">
+                <Banknote size={19} />
+              </span>
+            </div>
+            <div className="flex flex-wrap items-end justify-between gap-3">
+              <span className="inline-flex items-center gap-1.5 rounded-full bg-white/15 px-3 py-1.5 text-xs font-medium backdrop-blur">
+                <CalendarDays size={13} />
+                Today: {formatMoney(metrics.todayRevenue)}
+              </span>
+              {/* mini sparkline */}
+              <div className="h-10 w-32 opacity-90 sm:w-44">
+                <ResponsiveContainer width="100%" height="100%">
+                  <AreaChart data={chartData} margin={{ top: 2, right: 0, left: 0, bottom: 0 }}>
+                    <defs>
+                      <linearGradient id="spark" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="0%" stopColor="#fff" stopOpacity={0.5} />
+                        <stop offset="100%" stopColor="#fff" stopOpacity={0} />
+                      </linearGradient>
+                    </defs>
+                    <Area
+                      type="monotone"
+                      dataKey="revenue"
+                      stroke="#fff"
+                      strokeWidth={1.5}
+                      fill="url(#spark)"
+                      isAnimationActive={false}
+                    />
+                  </AreaChart>
+                </ResponsiveContainer>
+              </div>
+            </div>
+          </div>
+        </div>
+
         <MetricCard
           icon={ShoppingBag}
           label="Orders (30 days)"
@@ -306,6 +342,12 @@ export default function Dashboard() {
           <div className="h-64 px-2 py-3">
             <ResponsiveContainer width="100%" height="100%">
               <BarChart data={chartData} margin={{ top: 8, right: 12, left: 0, bottom: 0 }}>
+                <defs>
+                  <linearGradient id="barGrad" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stopColor="#818cf8" />
+                    <stop offset="100%" stopColor="#6366f1" />
+                  </linearGradient>
+                </defs>
                 <CartesianGrid strokeDasharray="3 3" stroke="rgba(128,128,140,0.25)" vertical={false} />
                 <XAxis
                   dataKey="day"
@@ -323,7 +365,7 @@ export default function Dashboard() {
                   width={32}
                 />
                 <Tooltip content={<ChartTooltip />} />
-                <Bar dataKey="orders" fill="#6366f1" radius={[4, 4, 0, 0]} maxBarSize={18} />
+                <Bar dataKey="orders" fill="url(#barGrad)" radius={[5, 5, 0, 0]} maxBarSize={18} />
               </BarChart>
             </ResponsiveContainer>
           </div>
@@ -385,12 +427,28 @@ export default function Dashboard() {
               <ul className="divide-y divide-ink-100">
                 {bestSellers.map((b, i) => (
                   <li key={b.title} className="flex items-center gap-3 px-5 py-3">
-                    <span className="flex size-7 shrink-0 items-center justify-center rounded-lg bg-ink-100 text-xs font-semibold text-ink-500">
+                    <span
+                      className={`flex size-7 shrink-0 items-center justify-center rounded-lg text-xs font-semibold ${
+                        i === 0
+                          ? 'bg-gradient-to-br from-indigo-500 to-violet-500 text-white shadow-sm shadow-indigo-500/30'
+                          : 'bg-ink-100 text-ink-500'
+                      }`}
+                    >
                       {i + 1}
                     </span>
                     <div className="min-w-0 flex-1">
                       <p className="truncate text-sm font-medium">{b.title}</p>
-                      <p className="text-xs text-ink-400">{b.qty} sold</p>
+                      <div className="mt-1.5 flex items-center gap-2">
+                        <div className="h-1.5 flex-1 overflow-hidden rounded-full bg-ink-100">
+                          <div
+                            className="h-full rounded-full bg-gradient-to-r from-indigo-500 to-violet-400"
+                            style={{
+                              width: `${Math.max(8, (b.qty / bestSellers[0].qty) * 100)}%`,
+                            }}
+                          />
+                        </div>
+                        <span className="shrink-0 text-xs text-ink-400">{b.qty} sold</span>
+                      </div>
                     </div>
                     <span className="text-sm font-medium tabular-nums">
                       {formatMoneyCompact(b.revenue)}

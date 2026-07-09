@@ -37,9 +37,13 @@ export default function StatusBadge({ status, size = 'sm' }) {
   return (
     <span
       className={`inline-flex items-center whitespace-nowrap rounded-full font-medium ring-1 ${meta.cls} ${
-        size === 'xs' ? 'px-2 py-0.5 text-[11px]' : 'px-2.5 py-1 text-xs'
+        size === 'xs' ? 'gap-1 px-2 py-0.5 text-[11px]' : 'gap-1.5 px-2.5 py-1 text-xs'
       }`}
     >
+      <span
+        aria-hidden
+        className={`rounded-full bg-current opacity-80 ${size === 'xs' ? 'size-1' : 'size-1.5'}`}
+      />
       {meta.label}
     </span>
   )

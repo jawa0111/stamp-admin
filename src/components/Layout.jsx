@@ -43,6 +43,9 @@ function NavItems({ onNavigate }) {
   const { isAdmin } = useAuth()
   return (
     <nav className="flex flex-1 flex-col gap-1 px-3">
+      <p className="mb-1 px-3.5 text-[11px] font-semibold uppercase tracking-widest text-ink-400">
+        Menu
+      </p>
       {NAV.filter((n) => !n.adminOnly || isAdmin).map(({ to, label, icon: Icon, end }) => (
         <NavLink
           key={to}
@@ -50,15 +53,29 @@ function NavItems({ onNavigate }) {
           end={end}
           onClick={onNavigate}
           className={({ isActive }) =>
-            `flex items-center gap-3 rounded-xl px-3.5 py-2.5 text-sm font-medium transition ${
+            `group relative flex items-center gap-3 rounded-xl px-3.5 py-2.5 text-sm font-medium transition ${
               isActive
-                ? 'bg-primary-soft text-primary'
+                ? 'bg-primary-soft text-primary shadow-sm ring-1 ring-primary/15'
                 : 'text-ink-500 hover:bg-ink-100 hover:text-ink-900'
             }`
           }
         >
-          <Icon size={18} strokeWidth={2} />
-          {label}
+          {({ isActive }) => (
+            <>
+              {isActive && (
+                <span
+                  aria-hidden
+                  className="absolute left-0 top-1/2 h-5 w-1 -translate-y-1/2 rounded-r-full bg-primary"
+                />
+              )}
+              <Icon
+                size={18}
+                strokeWidth={2}
+                className="transition-transform group-hover:scale-110"
+              />
+              {label}
+            </>
+          )}
         </NavLink>
       ))}
     </nav>

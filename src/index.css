@@ -57,6 +57,46 @@ html {
   -webkit-font-smoothing: antialiased;
 }
 
+/* ---- motion ---- */
+@keyframes blob {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33%      { transform: translate(40px, -50px) scale(1.15); }
+  66%      { transform: translate(-30px, 30px) scale(0.9); }
+}
+.animate-blob { animation: blob 14s ease-in-out infinite; }
+.animation-delay-3s { animation-delay: 3s; }
+.animation-delay-6s { animation-delay: 6s; }
+
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.animate-fade-up { animation: fade-up 400ms ease-out both; }
+
+@keyframes scale-in {
+  from { opacity: 0; transform: scale(0.96) translateY(8px); }
+  to   { opacity: 1; transform: scale(1) translateY(0); }
+}
+.animate-scale-in { animation: scale-in 200ms ease-out both; }
+
+@keyframes toast-in {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.animate-toast-in { animation: toast-in 250ms ease-out both; }
+
+/* ---- layered card shadow ---- */
+.card-shadow {
+  box-shadow:
+    0 1px 2px rgb(0 0 0 / 0.03),
+    0 8px 24px -12px rgb(0 0 0 / 0.10);
+}
+.dark .card-shadow {
+  box-shadow:
+    0 1px 2px rgb(0 0 0 / 0.4),
+    0 8px 24px -12px rgb(0 0 0 / 0.5);
+}
+
 body {
   background-color: var(--color-canvas);
   color: var(--color-ink-900);

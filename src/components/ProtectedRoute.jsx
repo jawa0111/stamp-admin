@@ -33,7 +33,7 @@ export default function ProtectedRoute({ children, adminOnly = false }) {
         </p>
         <button
           onClick={signOut}
-          className="mt-2 inline-flex cursor-pointer items-center gap-2 rounded-xl bg-primary px-4 py-2.5 text-sm font-medium text-white transition hover:bg-primary-strong"
+          className="mt-2 inline-flex cursor-pointer items-center gap-2 rounded-xl bg-primary shadow-md shadow-primary/20 active:scale-[0.98] px-4 py-2.5 text-sm font-medium text-white transition hover:bg-primary-strong"
         >
           <LogOut size={16} /> Sign out
         </button>

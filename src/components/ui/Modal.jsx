@@ -26,7 +26,7 @@ export default function Modal({ open, onClose, title, children, wide = false }) 
         role="dialog"
         aria-modal="true"
         aria-label={title}
-        className={`relative z-10 flex max-h-[92dvh] w-full flex-col rounded-t-2xl bg-surface shadow-2xl sm:rounded-2xl ${
+        className={`relative z-10 flex max-h-[92dvh] w-full animate-scale-in flex-col rounded-t-2xl bg-surface shadow-2xl sm:rounded-2xl ${
           wide ? 'sm:max-w-3xl' : 'sm:max-w-lg'
         }`}
       >
