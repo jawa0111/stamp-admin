@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { NavLink, Outlet, useLocation } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
+import { useTheme } from '../context/ThemeContext'
 import {
   LayoutDashboard,
   ShoppingBag,
@@ -11,6 +12,8 @@ import {
   LogOut,
   Menu,
   X,
+  Sun,
+  Moon,
 } from 'lucide-react'
 
 const NAV = [
@@ -21,6 +24,20 @@ const NAV = [
   { to: '/finances', label: 'Finances', icon: Wallet, adminOnly: true },
   { to: '/settings', label: 'Settings', icon: Settings },
 ]
+
+export function ThemeToggle({ className = '' }) {
+  const { isDark, toggle } = useTheme()
+  return (
+    <button
+      onClick={toggle}
+      className={`cursor-pointer rounded-lg p-2 text-ink-400 transition hover:bg-ink-100 hover:text-ink-900 ${className}`}
+      aria-label={isDark ? 'Switch to light theme' : 'Switch to dark theme'}
+      title={isDark ? 'Light theme' : 'Dark theme'}
+    >
+      {isDark ? <Sun size={18} /> : <Moon size={18} />}
+    </button>
+  )
+}
 
 function NavItems({ onNavigate }) {
   const { isAdmin } = useAuth()
@@ -35,8 +52,8 @@ function NavItems({ onNavigate }) {
           className={({ isActive }) =>
             `flex items-center gap-3 rounded-xl px-3.5 py-2.5 text-sm font-medium transition ${
               isActive
-                ? 'bg-white text-ink-950 shadow-sm'
-                : 'text-ink-400 hover:bg-white/10 hover:text-white'
+                ? 'bg-primary-soft text-primary'
+                : 'text-ink-500 hover:bg-ink-100 hover:text-ink-900'
             }`
           }
         >
@@ -51,20 +68,21 @@ function NavItems({ onNavigate }) {
 function SidebarFooter() {
   const { profile, signOut } = useAuth()
   return (
-    <div className="border-t border-white/10 p-3">
-      <div className="flex items-center gap-3 rounded-xl px-2 py-2">
-        <div className="flex size-9 shrink-0 items-center justify-center rounded-full bg-white/10 text-sm font-semibold text-white">
+    <div className="border-t border-ink-200 p-3">
+      <div className="flex items-center gap-2.5 rounded-xl px-2 py-2">
+        <div className="flex size-9 shrink-0 items-center justify-center rounded-full bg-primary text-sm font-semibold text-white">
           {(profile?.full_name ?? profile?.email ?? '?').charAt(0).toUpperCase()}
         </div>
         <div className="min-w-0 flex-1">
-          <p className="truncate text-sm font-medium text-white">
+          <p className="truncate text-sm font-medium text-ink-900">
             {profile?.full_name ?? profile?.email}
           </p>
-          <p className="truncate text-xs capitalize text-ink-500">{profile?.role}</p>
+          <p className="truncate text-xs capitalize text-ink-400">{profile?.role}</p>
         </div>
+        <ThemeToggle />
         <button
           onClick={signOut}
-          className="cursor-pointer rounded-lg p-2 text-ink-400 transition hover:bg-white/10 hover:text-white"
+          className="cursor-pointer rounded-lg p-2 text-ink-400 transition hover:bg-ink-100 hover:text-red-500"
           aria-label="Sign out"
           title="Sign out"
         >
@@ -84,13 +102,13 @@ export default function Layout() {
 
   const brand = (
     <div className="flex items-center gap-2.5 px-6 py-6">
-      <div className="flex size-9 items-center justify-center rounded-xl bg-white font-display text-lg font-bold text-ink-950">
+      <div className="flex size-9 items-center justify-center rounded-xl bg-gradient-to-br from-primary to-violet-500 font-display text-lg font-bold text-white shadow-md shadow-primary/30">
         S
       </div>
-      <span className="font-display text-lg font-semibold tracking-tight text-white">
+      <span className="font-display text-lg font-semibold tracking-tight text-ink-900">
         STAMP
       </span>
-      <span className="rounded-md bg-white/10 px-1.5 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-ink-400">
+      <span className="rounded-md bg-primary-soft px-1.5 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-primary">
         Admin
       </span>
     </div>
@@ -99,7 +117,7 @@ export default function Layout() {
   return (
     <div className="min-h-dvh lg:pl-64">
       {/* Desktop sidebar */}
-      <aside className="fixed inset-y-0 left-0 z-40 hidden w-64 flex-col bg-ink-950 lg:flex">
+      <aside className="fixed inset-y-0 left-0 z-40 hidden w-64 flex-col border-r border-ink-200 bg-surface lg:flex">
         {brand}
         <NavItems />
         <SidebarFooter />
@@ -109,16 +127,16 @@ export default function Layout() {
       {open && (
         <div className="fixed inset-0 z-50 lg:hidden">
           <div
-            className="absolute inset-0 bg-ink-950/60 backdrop-blur-sm"
+            className="absolute inset-0 bg-black/50 backdrop-blur-sm"
             onClick={() => setOpen(false)}
             aria-hidden
           />
-          <aside className="absolute inset-y-0 left-0 flex w-72 max-w-[85vw] flex-col bg-ink-950 shadow-2xl">
+          <aside className="absolute inset-y-0 left-0 flex w-72 max-w-[85vw] flex-col border-r border-ink-200 bg-surface shadow-2xl">
             <div className="flex items-center justify-between pr-3">
               {brand}
               <button
                 onClick={() => setOpen(false)}
-                className="cursor-pointer rounded-lg p-2 text-ink-400 hover:bg-white/10 hover:text-white"
+                className="cursor-pointer rounded-lg p-2 text-ink-400 transition hover:bg-ink-100 hover:text-ink-900"
                 aria-label="Close menu"
               >
                 <X size={20} />
@@ -131,7 +149,7 @@ export default function Layout() {
       )}
 
       {/* Mobile top bar */}
-      <header className="no-print sticky top-0 z-30 flex items-center gap-3 border-b border-ink-200 bg-white/90 px-4 py-3 backdrop-blur lg:hidden">
+      <header className="no-print sticky top-0 z-30 flex items-center gap-2 border-b border-ink-200 bg-surface/90 px-4 py-3 backdrop-blur lg:hidden">
         <button
           onClick={() => setOpen(true)}
           className="cursor-pointer rounded-lg p-2 text-ink-600 transition hover:bg-ink-100"
@@ -139,9 +157,10 @@ export default function Layout() {
         >
           <Menu size={22} />
         </button>
-        <span className="font-display text-base font-semibold">
+        <span className="flex-1 font-display text-base font-semibold">
           {current?.label ?? 'STAMP Admin'}
         </span>
+        <ThemeToggle />
       </header>
 
       <main className="mx-auto w-full max-w-7xl px-4 py-6 sm:px-6 lg:px-8 lg:py-8">

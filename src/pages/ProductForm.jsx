@@ -283,12 +283,12 @@ export default function ProductForm() {
               <button
                 type="button"
                 onClick={unarchive}
-                className="inline-flex cursor-pointer items-center gap-2 rounded-xl border border-ink-200 bg-white px-4 py-2.5 text-sm font-medium transition hover:bg-ink-100"
+                className="inline-flex cursor-pointer items-center gap-2 rounded-xl border border-ink-200 bg-surface px-4 py-2.5 text-sm font-medium transition hover:bg-ink-100"
               >
                 <ArchiveRestore size={16} /> Restore
               </button>
             )}
-            <label className="flex cursor-pointer items-center gap-2.5 rounded-xl border border-ink-200 bg-white px-4 py-2.5">
+            <label className="flex cursor-pointer items-center gap-2.5 rounded-xl border border-ink-200 bg-surface px-4 py-2.5">
               <span className="text-sm font-medium">
                 {form.is_published ? 'Published' : 'Draft'}
               </span>
@@ -302,7 +302,7 @@ export default function ProductForm() {
                 }`}
               >
                 <span
-                  className={`absolute top-0.5 size-4.5 rounded-full bg-white shadow transition-all ${
+                  className={`absolute top-0.5 size-4.5 rounded-full bg-surface shadow transition-all ${
                     form.is_published ? 'left-5' : 'left-0.5'
                   }`}
                 />
@@ -311,7 +311,7 @@ export default function ProductForm() {
             <button
               type="submit"
               disabled={saving || uploading}
-              className="inline-flex cursor-pointer items-center gap-2 rounded-xl bg-ink-900 px-5 py-2.5 text-sm font-medium text-white transition hover:bg-ink-700 disabled:opacity-50"
+              className="inline-flex cursor-pointer items-center gap-2 rounded-xl bg-primary px-5 py-2.5 text-sm font-medium text-white transition hover:bg-primary-strong disabled:opacity-50"
             >
               <Save size={16} /> {saving ? 'Saving…' : 'Save'}
             </button>
@@ -320,7 +320,7 @@ export default function ProductForm() {
       />
 
       {isArchived && (
-        <div className="mb-4 rounded-xl border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-800">
+        <div className="mb-4 rounded-xl border border-amber-200 dark:border-amber-500/30 bg-amber-50 px-4 py-3 text-sm text-amber-800 dark:text-amber-400">
           This product is archived. It is hidden from the store; restore it to make changes visible.
         </div>
       )}
@@ -504,14 +504,14 @@ export default function ProductForm() {
                         type="checkbox"
                         checked={v.is_active}
                         onChange={(e) => setVariant(v.key, 'is_active', e.target.checked)}
-                        className="size-4 cursor-pointer accent-ink-900"
+                        className="size-4 cursor-pointer accent-primary"
                       />
                       Active
                     </label>
                     <button
                       type="button"
                       onClick={() => removeVariant(v)}
-                      className="cursor-pointer rounded-lg p-2 text-ink-400 transition hover:bg-red-50 hover:text-red-600"
+                      className="cursor-pointer rounded-lg p-2 text-ink-400 transition hover:bg-red-50 dark:hover:bg-red-500/15 dark:bg-red-500/10 hover:text-red-600 dark:text-red-400"
                       aria-label="Remove variant"
                     >
                       <Trash2 size={16} />
@@ -609,7 +609,7 @@ export default function ProductForm() {
                       />
                       <div className="min-w-0 flex-1">
                         {i === 0 && (
-                          <span className="rounded-md bg-ink-900 px-1.5 py-0.5 text-[10px] font-semibold uppercase text-white">
+                          <span className="rounded-md bg-primary px-1.5 py-0.5 text-[10px] font-semibold uppercase text-white">
                             Cover
                           </span>
                         )}
@@ -629,7 +629,7 @@ export default function ProductForm() {
                         onClick={() =>
                           set('images', form.images.filter((u) => u !== url))
                         }
-                        className="cursor-pointer rounded-lg p-1.5 text-ink-400 transition hover:bg-red-50 hover:text-red-600"
+                        className="cursor-pointer rounded-lg p-1.5 text-ink-400 transition hover:bg-red-50 dark:hover:bg-red-500/15 dark:bg-red-500/10 hover:text-red-600 dark:text-red-400"
                         aria-label="Remove image"
                       >
                         <X size={16} />
@@ -648,7 +648,7 @@ export default function ProductForm() {
         <button
           type="submit"
           disabled={saving || uploading}
-          className="inline-flex w-full cursor-pointer items-center justify-center gap-2 rounded-xl bg-ink-900 px-5 py-3 text-sm font-semibold text-white transition hover:bg-ink-700 disabled:opacity-50"
+          className="inline-flex w-full cursor-pointer items-center justify-center gap-2 rounded-xl bg-primary px-5 py-3 text-sm font-semibold text-white transition hover:bg-primary-strong disabled:opacity-50"
         >
           <Save size={16} /> {saving ? 'Saving…' : 'Save product'}
         </button>

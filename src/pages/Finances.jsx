@@ -26,10 +26,10 @@ import {
 const EXPENSE_CATEGORIES = ['inventory', 'packaging', 'ads', 'delivery', 'other']
 
 const CATEGORY_STYLES = {
-  inventory: 'bg-sky-100 text-sky-700',
-  packaging: 'bg-violet-100 text-violet-700',
-  ads: 'bg-pink-100 text-pink-700',
-  delivery: 'bg-amber-100 text-amber-700',
+  inventory: 'bg-sky-100 dark:bg-sky-500/15 text-sky-700 dark:text-sky-400',
+  packaging: 'bg-violet-100 dark:bg-violet-500/15 text-violet-700 dark:text-violet-400',
+  ads: 'bg-pink-100 dark:bg-pink-500/15 text-pink-700 dark:text-pink-400',
+  delivery: 'bg-amber-100 dark:bg-amber-500/15 text-amber-700 dark:text-amber-400',
   other: 'bg-ink-100 text-ink-600',
 }
 
@@ -47,11 +47,11 @@ function CategoryChip({ category }) {
 
 function StatCard({ icon: Icon, label, value, tone, sub }) {
   const tones = {
-    green: 'bg-emerald-100 text-emerald-600',
-    red: 'bg-red-100 text-red-600',
-    blue: 'bg-sky-100 text-sky-600',
-    violet: 'bg-violet-100 text-violet-600',
-    amber: 'bg-amber-100 text-amber-600',
+    green: 'bg-emerald-100 dark:bg-emerald-500/15 text-emerald-600 dark:text-emerald-400',
+    red: 'bg-red-100 dark:bg-red-500/15 text-red-600 dark:text-red-400',
+    blue: 'bg-sky-100 dark:bg-sky-500/15 text-sky-600 dark:text-sky-400',
+    violet: 'bg-violet-100 dark:bg-violet-500/15 text-violet-600 dark:text-violet-400',
+    amber: 'bg-amber-100 dark:bg-amber-500/15 text-amber-600 dark:text-amber-400',
   }
   return (
     <Card className="p-4 sm:p-5">
@@ -276,7 +276,7 @@ export default function Finances() {
             key={t.id}
             onClick={() => setTab(t.id)}
             className={`flex-1 cursor-pointer rounded-lg px-3 py-2 text-sm font-medium transition ${
-              tab === t.id ? 'bg-white text-ink-900 shadow-sm' : 'text-ink-500 hover:text-ink-800'
+              tab === t.id ? 'bg-surface text-ink-900 shadow-sm' : 'text-ink-500 hover:text-ink-800'
             }`}
           >
             {t.label}
@@ -309,12 +309,12 @@ export default function Finances() {
             />
           </div>
 
-          <label className="mt-4 flex w-fit cursor-pointer items-center gap-2.5 rounded-xl border border-ink-200 bg-white px-4 py-2.5 text-sm">
+          <label className="mt-4 flex w-fit cursor-pointer items-center gap-2.5 rounded-xl border border-ink-200 bg-surface px-4 py-2.5 text-sm">
             <input
               type="checkbox"
               checked={includeCogs}
               onChange={(e) => setIncludeCogs(e.target.checked)}
-              className="size-4 cursor-pointer accent-ink-900"
+              className="size-4 cursor-pointer accent-primary"
             />
             <Package size={15} className="text-ink-400" />
             Subtract cost of goods sold ({formatMoney(cogs)}) from profit
@@ -335,7 +335,7 @@ export default function Finances() {
                       </div>
                       <div className="h-2 overflow-hidden rounded-full bg-ink-100">
                         <div
-                          className="h-full rounded-full bg-ink-900"
+                          className="h-full rounded-full bg-primary"
                           style={{ width: `${Math.max(3, (amount / totalExpenses) * 100)}%` }}
                         />
                       </div>
@@ -353,7 +353,7 @@ export default function Finances() {
                 <ul className="divide-y divide-ink-100">
                   {investmentsByFounder.map(([name, amount]) => (
                     <li key={name} className="flex items-center gap-3 px-5 py-3.5">
-                      <div className="flex size-9 shrink-0 items-center justify-center rounded-full bg-violet-100 text-sm font-semibold text-violet-700">
+                      <div className="flex size-9 shrink-0 items-center justify-center rounded-full bg-violet-100 dark:bg-violet-500/15 text-sm font-semibold text-violet-700 dark:text-violet-400">
                         {name.charAt(0).toUpperCase()}
                       </div>
                       <span className="min-w-0 flex-1 truncate font-medium">{name}</span>
@@ -378,7 +378,7 @@ export default function Finances() {
             </p>
             <button
               onClick={() => setExpenseModal({})}
-              className="inline-flex cursor-pointer items-center gap-2 rounded-xl bg-ink-900 px-4 py-2.5 text-sm font-medium text-white transition hover:bg-ink-700"
+              className="inline-flex cursor-pointer items-center gap-2 rounded-xl bg-primary px-4 py-2.5 text-sm font-medium text-white transition hover:bg-primary-strong"
             >
               <Plus size={16} /> Add expense
             </button>
@@ -413,7 +413,7 @@ export default function Finances() {
                       </button>
                       <button
                         onClick={() => setDeleting({ table: 'expenses', row: x })}
-                        className="cursor-pointer rounded-lg p-2 text-ink-400 transition hover:bg-red-50 hover:text-red-600"
+                        className="cursor-pointer rounded-lg p-2 text-ink-400 transition hover:bg-red-50 dark:hover:bg-red-500/15 dark:bg-red-500/10 hover:text-red-600 dark:text-red-400"
                         aria-label="Delete expense"
                       >
                         <Trash2 size={15} />
@@ -433,7 +433,7 @@ export default function Finances() {
             </p>
             <button
               onClick={() => setInvestModal({})}
-              className="inline-flex cursor-pointer items-center gap-2 rounded-xl bg-ink-900 px-4 py-2.5 text-sm font-medium text-white transition hover:bg-ink-700"
+              className="inline-flex cursor-pointer items-center gap-2 rounded-xl bg-primary px-4 py-2.5 text-sm font-medium text-white transition hover:bg-primary-strong"
             >
               <Plus size={16} /> Record investment
             </button>
@@ -466,7 +466,7 @@ export default function Finances() {
               <ul className="divide-y divide-ink-100">
                 {investments.map((x) => (
                   <li key={x.id} className="flex items-center gap-3 px-4 py-3.5 sm:px-5">
-                    <div className="flex size-9 shrink-0 items-center justify-center rounded-full bg-violet-100 text-sm font-semibold text-violet-700">
+                    <div className="flex size-9 shrink-0 items-center justify-center rounded-full bg-violet-100 dark:bg-violet-500/15 text-sm font-semibold text-violet-700 dark:text-violet-400">
                       {x.founder_name.charAt(0).toUpperCase()}
                     </div>
                     <div className="min-w-0 flex-1">
@@ -487,7 +487,7 @@ export default function Finances() {
                       </button>
                       <button
                         onClick={() => setDeleting({ table: 'investments', row: x })}
-                        className="cursor-pointer rounded-lg p-2 text-ink-400 transition hover:bg-red-50 hover:text-red-600"
+                        className="cursor-pointer rounded-lg p-2 text-ink-400 transition hover:bg-red-50 dark:hover:bg-red-500/15 dark:bg-red-500/10 hover:text-red-600 dark:text-red-400"
                         aria-label="Delete investment"
                       >
                         <Trash2 size={15} />
@@ -559,7 +559,7 @@ export default function Finances() {
               <button
                 type="submit"
                 disabled={busy}
-                className="cursor-pointer rounded-xl bg-ink-900 px-5 py-2 text-sm font-medium text-white transition hover:bg-ink-700 disabled:opacity-50"
+                className="cursor-pointer rounded-xl bg-primary px-5 py-2 text-sm font-medium text-white transition hover:bg-primary-strong disabled:opacity-50"
               >
                 {busy ? 'Saving…' : 'Save expense'}
               </button>
@@ -631,7 +631,7 @@ export default function Finances() {
               <button
                 type="submit"
                 disabled={busy}
-                className="cursor-pointer rounded-xl bg-ink-900 px-5 py-2 text-sm font-medium text-white transition hover:bg-ink-700 disabled:opacity-50"
+                className="cursor-pointer rounded-xl bg-primary px-5 py-2 text-sm font-medium text-white transition hover:bg-primary-strong disabled:opacity-50"
               >
                 {busy ? 'Saving…' : 'Save investment'}
               </button>

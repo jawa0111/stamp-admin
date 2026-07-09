@@ -12,7 +12,7 @@ export default function Pagination({ page, pageSize, total, onPage }) {
         <button
           disabled={page <= 1}
           onClick={() => onPage(page - 1)}
-          className="cursor-pointer rounded-lg border border-ink-200 bg-white p-2 transition hover:bg-ink-100 disabled:cursor-not-allowed disabled:opacity-40"
+          className="cursor-pointer rounded-lg border border-ink-200 bg-surface p-2 transition hover:bg-ink-100 disabled:cursor-not-allowed disabled:opacity-40"
           aria-label="Previous page"
         >
           <ChevronLeft size={16} />
@@ -20,7 +20,7 @@ export default function Pagination({ page, pageSize, total, onPage }) {
         <button
           disabled={page >= pages}
           onClick={() => onPage(page + 1)}
-          className="cursor-pointer rounded-lg border border-ink-200 bg-white p-2 transition hover:bg-ink-100 disabled:cursor-not-allowed disabled:opacity-40"
+          className="cursor-pointer rounded-lg border border-ink-200 bg-surface p-2 transition hover:bg-ink-100 disabled:cursor-not-allowed disabled:opacity-40"
           aria-label="Next page"
         >
           <ChevronRight size={16} />

@@ -136,7 +136,7 @@ export default function Settings() {
               <dd>
                 <span
                   className={`rounded-full px-2.5 py-0.5 text-xs font-semibold capitalize ${
-                    isAdmin ? 'bg-emerald-100 text-emerald-700' : 'bg-sky-100 text-sky-700'
+                    isAdmin ? 'bg-emerald-100 dark:bg-emerald-500/15 text-emerald-700 dark:text-emerald-400' : 'bg-sky-100 dark:bg-sky-500/15 text-sky-700 dark:text-sky-400'
                   }`}
                 >
                   {profile?.role}
@@ -178,7 +178,7 @@ export default function Settings() {
             <button
               type="submit"
               disabled={pwBusy}
-              className="cursor-pointer rounded-xl bg-ink-900 px-5 py-2.5 text-sm font-medium text-white transition hover:bg-ink-700 disabled:opacity-50"
+              className="cursor-pointer rounded-xl bg-primary px-5 py-2.5 text-sm font-medium text-white transition hover:bg-primary-strong disabled:opacity-50"
             >
               {pwBusy ? 'Updating…' : 'Update password'}
             </button>
@@ -200,7 +200,7 @@ export default function Settings() {
                 <button
                   type="submit"
                   disabled={busy || !newCat.trim()}
-                  className="inline-flex shrink-0 cursor-pointer items-center gap-1.5 rounded-xl bg-ink-900 px-4 py-2 text-sm font-medium text-white transition hover:bg-ink-700 disabled:opacity-50"
+                  className="inline-flex shrink-0 cursor-pointer items-center gap-1.5 rounded-xl bg-primary px-4 py-2 text-sm font-medium text-white transition hover:bg-primary-strong disabled:opacity-50"
                 >
                   <Plus size={15} /> Add
                 </button>
@@ -232,14 +232,14 @@ export default function Settings() {
                           title={c.is_published ? 'Published' : 'Hidden'}
                         >
                           <span
-                            className={`absolute top-0.5 size-4 rounded-full bg-white shadow transition-all ${
+                            className={`absolute top-0.5 size-4 rounded-full bg-surface shadow transition-all ${
                               c.is_published ? 'left-[18px]' : 'left-0.5'
                             }`}
                           />
                         </button>
                         <button
                           onClick={() => setDeletingCat(c)}
-                          className="cursor-pointer rounded-lg p-1.5 text-ink-400 transition hover:bg-red-50 hover:text-red-600"
+                          className="cursor-pointer rounded-lg p-1.5 text-ink-400 transition hover:bg-red-50 dark:hover:bg-red-500/15 dark:bg-red-500/10 hover:text-red-600 dark:text-red-400"
                           aria-label={`Delete ${c.name}`}
                         >
                           <Trash2 size={15} />
@@ -261,7 +261,7 @@ export default function Settings() {
               <ul className="divide-y divide-ink-100">
                 {team.map((u) => (
                   <li key={u.id} className="flex items-center gap-3 py-3">
-                    <div className="flex size-9 shrink-0 items-center justify-center rounded-full bg-ink-900 text-sm font-semibold text-white">
+                    <div className="flex size-9 shrink-0 items-center justify-center rounded-full bg-primary text-sm font-semibold text-white">
                       {(u.full_name ?? u.email).charAt(0).toUpperCase()}
                     </div>
                     <div className="min-w-0 flex-1">
@@ -271,8 +271,8 @@ export default function Settings() {
                     <span
                       className={`rounded-full px-2.5 py-0.5 text-xs font-semibold capitalize ${
                         u.role === 'admin'
-                          ? 'bg-emerald-100 text-emerald-700'
-                          : 'bg-sky-100 text-sky-700'
+                          ? 'bg-emerald-100 dark:bg-emerald-500/15 text-emerald-700 dark:text-emerald-400'
+                          : 'bg-sky-100 dark:bg-sky-500/15 text-sky-700 dark:text-sky-400'
                       }`}
                     >
                       {u.role}

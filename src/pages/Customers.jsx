@@ -120,7 +120,7 @@ export default function Customers() {
                     >
                       <td className="px-5 py-3.5">
                         <div className="flex items-center gap-3">
-                          <div className="flex size-9 shrink-0 items-center justify-center rounded-full bg-ink-900 text-sm font-semibold text-white">
+                          <div className="flex size-9 shrink-0 items-center justify-center rounded-full bg-primary text-sm font-semibold text-white">
                             {c.name?.charAt(0).toUpperCase() ?? '?'}
                           </div>
                           <span className="font-medium">{c.name}</span>
@@ -155,7 +155,7 @@ export default function Customers() {
                 >
                   <div onClick={() => navigate(`/customers/${c.id}`)}>
                     <div className="flex items-center gap-3">
-                      <div className="flex size-10 shrink-0 items-center justify-center rounded-full bg-ink-900 font-semibold text-white">
+                      <div className="flex size-10 shrink-0 items-center justify-center rounded-full bg-primary font-semibold text-white">
                         {c.name?.charAt(0).toUpperCase() ?? '?'}
                       </div>
                       <div className="min-w-0 flex-1">
