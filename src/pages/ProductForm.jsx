@@ -34,10 +34,12 @@ export default function ProductForm() {
   const navigate = useNavigate()
   const toast = useToast()
   const fileRef = useRef(null)
+  const videoRef = useRef(null)
 
   const [loading, setLoading] = useState(!isNew)
   const [saving, setSaving] = useState(false)
   const [uploading, setUploading] = useState(false)
+  const [videoUploading, setVideoUploading] = useState(false)
   const [categories, setCategories] = useState([])
   const [isArchived, setIsArchived] = useState(false)
 
@@ -157,6 +159,24 @@ export default function ProductForm() {
     }
     if (urls.length) set('images', [...form.images, ...urls])
     setUploading(false)
+  }
+
+  async function uploadVideo(file) {
+    if (!file) return
+    setVideoUploading(true)
+    const ext = file.name.split('.').pop()?.toLowerCase() || 'mp4'
+    const path = `video-${Date.now()}-${Math.random().toString(36).slice(2, 8)}.${ext}`
+    const { error } = await supabase.storage
+      .from('product-images')
+      .upload(path, file, { cacheControl: '31536000', upsert: false })
+    if (error) {
+      setVideoUploading(false)
+      return toast(`Video upload failed: ${error.message}`, 'error')
+    }
+    const { data } = supabase.storage.from('product-images').getPublicUrl(path)
+    set('video', data.publicUrl)
+    setVideoUploading(false)
+    toast('Video uploaded')
   }
 
   function moveImage(index, dir) {
@@ -380,13 +400,54 @@ export default function ProductForm() {
                   placeholder="Web Drop"
                 />
               </Field>
-              <Field label="Video URL" hint="Optional hover turnaround clip">
-                <Input
-                  type="url"
-                  value={form.video}
-                  onChange={(e) => set('video', e.target.value)}
-                  placeholder="https://…"
-                />
+              <Field label="Video" hint="Optional hover turnaround clip — paste a URL or upload">
+                <div className="flex gap-2">
+                  <Input
+                    type="url"
+                    value={form.video}
+                    onChange={(e) => set('video', e.target.value)}
+                    placeholder="https://…"
+                    className="flex-1"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => videoRef.current?.click()}
+                    disabled={videoUploading}
+                    className="inline-flex shrink-0 cursor-pointer items-center gap-1.5 rounded-xl border border-ink-200 px-3 py-2 text-sm font-medium transition hover:bg-ink-100 disabled:opacity-50"
+                    title="Upload a video file"
+                  >
+                    {videoUploading ? <Spinner size={15} /> : <UploadCloud size={15} />}
+                    {videoUploading ? 'Uploading…' : 'Upload'}
+                  </button>
+                  <input
+                    ref={videoRef}
+                    type="file"
+                    accept="video/*"
+                    className="hidden"
+                    onChange={(e) => {
+                      uploadVideo(e.target.files[0])
+                      e.target.value = ''
+                    }}
+                  />
+                </div>
+                {form.video && (
+                  <div className="mt-2 flex items-center gap-2">
+                    <video
+                      key={form.video}
+                      src={form.video}
+                      muted
+                      playsInline
+                      className="h-16 w-24 rounded-lg border border-ink-200 bg-black object-cover"
+                    />
+                    <button
+                      type="button"
+                      onClick={() => set('video', '')}
+                      className="inline-flex cursor-pointer items-center gap-1 text-xs font-medium text-red-600 transition hover:text-red-700 dark:text-red-400"
+                    >
+                      <X size={13} /> Remove
+                    </button>
+                  </div>
+                )}
               </Field>
             </div>
           </Card>
