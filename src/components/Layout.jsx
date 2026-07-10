@@ -14,6 +14,8 @@ import {
   X,
   Sun,
   Moon,
+  ChevronLeft,
+  ChevronRight,
 } from 'lucide-react'
 
 const NAV = [
@@ -100,10 +102,20 @@ function SidebarFooter() {
 
 export default function Layout() {
   const [open, setOpen] = useState(false)
+  const [collapsed, setCollapsed] = useState(
+    () => localStorage.getItem('stamp-sidebar-collapsed') === '1'
+  )
   const location = useLocation()
   const current = NAV.find(
     (n) => n.end ? location.pathname === n.to : location.pathname.startsWith(n.to)
   )
+
+  function toggleCollapsed() {
+    setCollapsed((c) => {
+      localStorage.setItem('stamp-sidebar-collapsed', c ? '0' : '1')
+      return !c
+    })
+  }
 
   const brand = (
     <div className="flex items-center gap-2.5 px-6 py-6">
@@ -120,13 +132,39 @@ export default function Layout() {
   )
 
   return (
-    <div className="min-h-dvh lg:pl-64">
-      {/* Desktop sidebar — always black */}
-      <aside className="fixed inset-y-0 left-0 z-40 hidden w-64 flex-col bg-zinc-950 lg:flex">
-        {brand}
+    <div className={`min-h-dvh ${collapsed ? '' : 'lg:pl-64'}`}>
+      {/* Desktop sidebar — always black; collapsible */}
+      <aside
+        className={`fixed inset-y-0 left-0 z-40 hidden w-64 flex-col bg-zinc-950 ${
+          collapsed ? 'lg:hidden' : 'lg:flex'
+        }`}
+      >
+        <div className="flex items-center justify-between">
+          {brand}
+          <button
+            onClick={toggleCollapsed}
+            className="mr-3 cursor-pointer rounded-lg p-2 text-zinc-400 transition hover:bg-white/10 hover:text-white"
+            aria-label="Collapse sidebar"
+            title="Collapse sidebar"
+          >
+            <ChevronLeft size={18} />
+          </button>
+        </div>
         <NavItems />
         <SidebarFooter />
       </aside>
+
+      {/* Floating reopen button — desktop, only when collapsed */}
+      {collapsed && (
+        <button
+          onClick={toggleCollapsed}
+          className="no-print fixed left-3 top-3 z-40 hidden cursor-pointer items-center justify-center rounded-lg bg-zinc-950 p-2.5 text-white shadow-lg transition hover:bg-zinc-800 lg:flex"
+          aria-label="Open sidebar"
+          title="Open sidebar"
+        >
+          <ChevronRight size={18} />
+        </button>
+      )}
 
       {/* Mobile drawer */}
       {open && (
