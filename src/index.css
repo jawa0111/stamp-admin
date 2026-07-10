@@ -24,10 +24,10 @@
   --color-canvas: #f4f4f6;   /* page background */
   --color-surface: #ffffff;  /* cards, inputs, modals */
 
-  /* Brand accent — bright azure, readable with white text */
-  --color-primary: #1e9bff;        /* azure */
-  --color-primary-strong: #0d84e6; /* darker azure hover */
-  --color-primary-soft: #e8f4ff;   /* light azure tint */
+  /* Brand accent — royal cobalt blue, readable with white text */
+  --color-primary: #1a5fb4;        /* royal blue */
+  --color-primary-strong: #154a8f; /* darker royal hover */
+  --color-primary-soft: #e7f0fb;   /* light royal tint */
 
   --color-accent-500: #f59e0b;
   --color-accent-600: #d97706;
@@ -49,9 +49,9 @@
   --color-canvas: #0b0b0e;
   --color-surface: #17171c;
 
-  --color-primary: #33a6ff;        /* azure — brighter on dark */
-  --color-primary-strong: #5cb8ff; /* lighter azure hover */
-  --color-primary-soft: #16324d;
+  --color-primary: #3b82d6;        /* royal blue — brighter on dark */
+  --color-primary-strong: #5c9ae6; /* lighter royal hover */
+  --color-primary-soft: #16243d;
 
   color-scheme: dark;
 }
