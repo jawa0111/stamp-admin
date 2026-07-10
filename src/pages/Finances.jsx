@@ -47,27 +47,48 @@ function CategoryChip({ category }) {
 
 function StatCard({ icon: Icon, label, value, tone, sub }) {
   const tones = {
-    green: 'bg-emerald-100 dark:bg-emerald-500/15 text-emerald-600 dark:text-emerald-400',
-    red: 'bg-red-100 dark:bg-red-500/15 text-red-600 dark:text-red-400',
-    blue: 'bg-sky-100 dark:bg-sky-500/15 text-sky-600 dark:text-sky-400',
-    violet: 'bg-violet-100 dark:bg-violet-500/15 text-violet-600 dark:text-violet-400',
-    amber: 'bg-amber-100 dark:bg-amber-500/15 text-amber-600 dark:text-amber-400',
+    green: {
+      card: 'from-emerald-50 to-teal-100 border-emerald-200 dark:from-emerald-500/10 dark:to-emerald-500/5 dark:border-emerald-500/20',
+      label: 'text-emerald-700 dark:text-emerald-300', value: 'text-emerald-950 dark:text-emerald-50',
+      chip: 'bg-emerald-500 text-white shadow-sm shadow-emerald-500/30',
+    },
+    red: {
+      card: 'from-red-50 to-rose-100 border-red-200 dark:from-red-500/10 dark:to-red-500/5 dark:border-red-500/20',
+      label: 'text-red-700 dark:text-red-300', value: 'text-red-950 dark:text-red-50',
+      chip: 'bg-red-500 text-white shadow-sm shadow-red-500/30',
+    },
+    blue: {
+      card: 'from-sky-50 to-blue-100 border-sky-200 dark:from-sky-500/10 dark:to-sky-500/5 dark:border-sky-500/20',
+      label: 'text-sky-700 dark:text-sky-300', value: 'text-sky-950 dark:text-sky-50',
+      chip: 'bg-sky-500 text-white shadow-sm shadow-sky-500/30',
+    },
+    violet: {
+      card: 'from-violet-50 to-purple-100 border-violet-200 dark:from-violet-500/10 dark:to-violet-500/5 dark:border-violet-500/20',
+      label: 'text-violet-700 dark:text-violet-300', value: 'text-violet-950 dark:text-violet-50',
+      chip: 'bg-violet-500 text-white shadow-sm shadow-violet-500/30',
+    },
+    amber: {
+      card: 'from-amber-50 to-orange-100 border-amber-200 dark:from-amber-500/10 dark:to-amber-500/5 dark:border-amber-500/20',
+      label: 'text-amber-700 dark:text-amber-300', value: 'text-amber-950 dark:text-amber-50',
+      chip: 'bg-amber-500 text-white shadow-sm shadow-amber-500/30',
+    },
   }
+  const t = tones[tone] ?? tones.blue
   return (
-    <Card className="p-4 sm:p-5">
+    <div className={`rounded-2xl border bg-gradient-to-br shadow-sm ${t.card} p-4 sm:p-5`}>
       <div className="flex items-start justify-between gap-2">
         <div className="min-w-0">
-          <p className="text-[13px] font-medium text-ink-500">{label}</p>
-          <p className="mt-1.5 truncate font-display text-lg font-semibold tracking-tight sm:text-xl">
+          <p className={`text-[13px] font-medium ${t.label}`}>{label}</p>
+          <p className={`mt-1.5 truncate font-display text-lg font-semibold tracking-tight sm:text-xl ${t.value}`}>
             {value}
           </p>
-          {sub && <p className="mt-0.5 text-xs text-ink-400">{sub}</p>}
+          {sub && <p className={`mt-0.5 text-xs opacity-70 ${t.label}`}>{sub}</p>}
         </div>
-        <div className={`flex size-10 shrink-0 items-center justify-center rounded-xl ${tones[tone]}`}>
+        <div className={`flex size-10 shrink-0 items-center justify-center rounded-xl ${t.chip}`}>
           <Icon size={19} />
         </div>
       </div>
-    </Card>
+    </div>
   )
 }
 
