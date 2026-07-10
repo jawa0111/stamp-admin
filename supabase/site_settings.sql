@@ -30,7 +30,8 @@ create policy "admin writes site settings" on site_settings
 -- Seed the keys the storefront reads (empty = use built-in defaults)
 insert into site_settings (key, value) values
   ('hero_video', ''),
-  ('hero_poster', '')
+  ('hero_poster', ''),
+  ('hero_live', '0')   -- '1' = storefront shows the custom intro video
 on conflict (key) do nothing;
 
 -- ============================================================

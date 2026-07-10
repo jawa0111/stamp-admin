@@ -8,6 +8,7 @@ import { Film, ImageIcon, UploadCloud, Trash2, ExternalLink } from 'lucide-react
 // Keys stored in the site_settings table (read by the storefront Home hero)
 const VIDEO_KEY = 'hero_video'
 const POSTER_KEY = 'hero_poster'
+const LIVE_KEY = 'hero_live' // '1' = show custom intro on the storefront
 
 export default function HeroVideoSettings() {
   const toast = useToast()
@@ -18,6 +19,8 @@ export default function HeroVideoSettings() {
   const [missing, setMissing] = useState(false) // table/bucket not set up yet
   const [video, setVideo] = useState('')
   const [poster, setPoster] = useState('')
+  const [live, setLive] = useState(false)
+  const [savingLive, setSavingLive] = useState(false)
   const [uploading, setUploading] = useState(null) // 'video' | 'poster' | null
 
   async function load() {
@@ -25,7 +28,7 @@ export default function HeroVideoSettings() {
     const { data, error } = await supabase
       .from('site_settings')
       .select('key, value')
-      .in('key', [VIDEO_KEY, POSTER_KEY])
+      .in('key', [VIDEO_KEY, POSTER_KEY, LIVE_KEY])
     if (error) {
       // Most likely the table doesn't exist yet
       setMissing(true)
@@ -35,7 +38,23 @@ export default function HeroVideoSettings() {
     const map = Object.fromEntries((data ?? []).map((r) => [r.key, r.value]))
     setVideo(map[VIDEO_KEY] ?? '')
     setPoster(map[POSTER_KEY] ?? '')
+    setLive(map[LIVE_KEY] === '1')
     setLoading(false)
+  }
+
+  async function toggleLive() {
+    if (!video) {
+      return toast('Upload an intro video first, then go live.', 'error')
+    }
+    const next = !live
+    setSavingLive(true)
+    const { error } = await supabase
+      .from('site_settings')
+      .upsert({ key: LIVE_KEY, value: next ? '1' : '0' })
+    setSavingLive(false)
+    if (error) return toast(error.message, 'error')
+    setLive(next)
+    toast(next ? 'Intro video is now live on the site' : 'Intro video hidden — site shows default')
   }
 
   useEffect(() => {
@@ -108,8 +127,51 @@ export default function HeroVideoSettings() {
 
   return (
     <Card>
-      <CardHeader title="Landing page intro" />
+      <CardHeader
+        title="Landing page intro"
+        action={
+          <span
+            className={`inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-xs font-medium ${
+              live
+                ? 'bg-emerald-100 text-emerald-700 dark:bg-emerald-500/15 dark:text-emerald-400'
+                : 'bg-ink-100 text-ink-500'
+            }`}
+          >
+            <span className={`size-1.5 rounded-full ${live ? 'bg-emerald-500' : 'bg-ink-400'}`} />
+            {live ? 'Live' : 'Not live'}
+          </span>
+        }
+      />
       <div className="space-y-5 p-5">
+        {/* Go live toggle */}
+        <div className="flex items-center justify-between gap-3 rounded-xl border border-ink-200 bg-ink-50 px-4 py-3">
+          <div>
+            <p className="text-sm font-medium">Show custom intro on the site</p>
+            <p className="mt-0.5 text-xs text-ink-400">
+              {live
+                ? 'Visitors currently see your uploaded video.'
+                : 'Off — visitors see the default clip until you go live.'}
+            </p>
+          </div>
+          <button
+            type="button"
+            role="switch"
+            aria-checked={live}
+            onClick={toggleLive}
+            disabled={savingLive}
+            className={`relative h-6 w-11 shrink-0 cursor-pointer rounded-full transition disabled:opacity-50 ${
+              live ? 'bg-emerald-500' : 'bg-ink-300'
+            }`}
+            aria-label="Go live"
+          >
+            <span
+              className={`absolute top-0.5 size-5 rounded-full bg-white shadow transition-all ${
+                live ? 'left-[22px]' : 'left-0.5'
+              }`}
+            />
+          </button>
+        </div>
+
         {/* Intro video */}
         <div>
           <div className="mb-2 flex items-center gap-2 text-sm font-medium">
