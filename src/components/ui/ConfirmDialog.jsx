@@ -34,7 +34,7 @@ export default function ConfirmDialog({
           onClick={onConfirm}
           disabled={busy}
           className={`cursor-pointer rounded-xl px-4 py-2 text-sm font-medium text-white transition disabled:opacity-50 ${
-            danger ? 'bg-red-600 hover:bg-red-700' : 'bg-primary hover:bg-primary-strong'
+            danger ? 'bg-red-600 hover:bg-red-700' : 'bg-brand hover:brightness-110'
           }`}
         >
           {busy ? 'Working…' : confirmLabel}

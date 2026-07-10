@@ -174,7 +174,7 @@ export default function OrderDetail() {
                       className={`cursor-pointer rounded-xl px-3.5 py-2 text-sm font-medium transition disabled:opacity-50 ${
                         destructive
                           ? 'border border-red-200 dark:border-red-500/30 bg-red-50 dark:bg-red-500/10 text-red-700 dark:text-red-400 hover:bg-red-100 dark:bg-red-500/15'
-                          : 'bg-primary text-white hover:bg-primary-strong'
+                          : 'bg-brand text-white hover:brightness-110'
                       }`}
                     >
                       {STATUS_META[s].label}
@@ -343,7 +343,7 @@ export default function OrderDetail() {
             <button
               onClick={saveNotes}
               disabled={savingNotes || notes === (order.notes ?? '')}
-              className="mt-2.5 inline-flex cursor-pointer items-center gap-2 rounded-xl bg-primary px-4 py-2 text-sm font-medium text-white transition hover:bg-primary-strong disabled:opacity-40"
+              className="mt-2.5 inline-flex cursor-pointer items-center gap-2 rounded-xl bg-brand px-4 py-2 text-sm font-medium text-white transition hover:brightness-110 disabled:opacity-40"
             >
               <Save size={15} /> {savingNotes ? 'Saving…' : 'Save notes'}
             </button>

@@ -125,7 +125,7 @@ export default function Products() {
         actions={
           <Link
             to="/products/new"
-            className="inline-flex items-center gap-2 rounded-xl bg-primary px-4 py-2.5 text-sm font-medium text-white transition hover:bg-primary-strong"
+            className="inline-flex items-center gap-2 rounded-xl bg-brand px-4 py-2.5 text-sm font-medium text-white transition hover:brightness-110"
           >
             <Plus size={16} /> New product
           </Link>
@@ -175,7 +175,7 @@ export default function Products() {
           action={
             <Link
               to="/products/new"
-              className="inline-flex items-center gap-2 rounded-xl bg-primary px-4 py-2.5 text-sm font-medium text-white transition hover:bg-primary-strong"
+              className="inline-flex items-center gap-2 rounded-xl bg-brand px-4 py-2.5 text-sm font-medium text-white transition hover:brightness-110"
             >
               <Plus size={16} /> New product
             </Link>
@@ -206,7 +206,7 @@ export default function Products() {
                   )}
                   <div className="absolute left-2 top-2 flex flex-col gap-1.5">
                     {p.is_archived ? (
-                      <span className="rounded-full bg-primary/80 px-2 py-0.5 text-[11px] font-medium text-white backdrop-blur">
+                      <span className="rounded-full bg-brand/80 px-2 py-0.5 text-[11px] font-medium text-white backdrop-blur">
                         Archived
                       </span>
                     ) : !p.is_published ? (

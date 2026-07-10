@@ -61,6 +61,11 @@ html {
   -webkit-font-smoothing: antialiased;
 }
 
+/* Brand gradient — used for primary buttons and table headers */
+.bg-brand {
+  background-image: linear-gradient(to right, #06236b, #0a3a9c);
+}
+
 body {
   background-color: var(--color-canvas);
   color: var(--color-ink-900);

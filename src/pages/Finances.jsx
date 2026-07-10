@@ -335,7 +335,7 @@ export default function Finances() {
                       </div>
                       <div className="h-2 overflow-hidden rounded-full bg-ink-100">
                         <div
-                          className="h-full rounded-full bg-primary"
+                          className="h-full rounded-full bg-brand"
                           style={{ width: `${Math.max(3, (amount / totalExpenses) * 100)}%` }}
                         />
                       </div>
@@ -378,7 +378,7 @@ export default function Finances() {
             </p>
             <button
               onClick={() => setExpenseModal({})}
-              className="inline-flex cursor-pointer items-center gap-2 rounded-xl bg-primary px-4 py-2.5 text-sm font-medium text-white transition hover:bg-primary-strong"
+              className="inline-flex cursor-pointer items-center gap-2 rounded-xl bg-brand px-4 py-2.5 text-sm font-medium text-white transition hover:brightness-110"
             >
               <Plus size={16} /> Add expense
             </button>
@@ -433,7 +433,7 @@ export default function Finances() {
             </p>
             <button
               onClick={() => setInvestModal({})}
-              className="inline-flex cursor-pointer items-center gap-2 rounded-xl bg-primary px-4 py-2.5 text-sm font-medium text-white transition hover:bg-primary-strong"
+              className="inline-flex cursor-pointer items-center gap-2 rounded-xl bg-brand px-4 py-2.5 text-sm font-medium text-white transition hover:brightness-110"
             >
               <Plus size={16} /> Record investment
             </button>
@@ -559,7 +559,7 @@ export default function Finances() {
               <button
                 type="submit"
                 disabled={busy}
-                className="cursor-pointer rounded-xl bg-primary px-5 py-2 text-sm font-medium text-white transition hover:bg-primary-strong disabled:opacity-50"
+                className="cursor-pointer rounded-xl bg-brand px-5 py-2 text-sm font-medium text-white transition hover:brightness-110 disabled:opacity-50"
               >
                 {busy ? 'Saving…' : 'Save expense'}
               </button>
@@ -631,7 +631,7 @@ export default function Finances() {
               <button
                 type="submit"
                 disabled={busy}
-                className="cursor-pointer rounded-xl bg-primary px-5 py-2 text-sm font-medium text-white transition hover:bg-primary-strong disabled:opacity-50"
+                className="cursor-pointer rounded-xl bg-brand px-5 py-2 text-sm font-medium text-white transition hover:brightness-110 disabled:opacity-50"
               >
                 {busy ? 'Saving…' : 'Save investment'}
               </button>

@@ -101,7 +101,7 @@ export default function Customers() {
           <Card className="hidden overflow-hidden md:block">
             <table className="w-full text-sm">
               <thead>
-                <tr className="border-b border-ink-200 bg-ink-50 text-left text-xs uppercase tracking-wide text-ink-500">
+                <tr className="bg-brand text-left text-xs uppercase tracking-wide text-blue-100">
                   <th className="px-5 py-3 font-medium">Customer</th>
                   <th className="px-4 py-3 font-medium">Contact</th>
                   <th className="px-4 py-3 text-right font-medium">Orders</th>
@@ -120,7 +120,7 @@ export default function Customers() {
                     >
                       <td className="px-5 py-3.5">
                         <div className="flex items-center gap-3">
-                          <div className="flex size-9 shrink-0 items-center justify-center rounded-full bg-primary text-sm font-semibold text-white">
+                          <div className="flex size-9 shrink-0 items-center justify-center rounded-full bg-brand text-sm font-semibold text-white">
                             {c.name?.charAt(0).toUpperCase() ?? '?'}
                           </div>
                           <span className="font-medium">{c.name}</span>
@@ -155,7 +155,7 @@ export default function Customers() {
                 >
                   <div onClick={() => navigate(`/customers/${c.id}`)}>
                     <div className="flex items-center gap-3">
-                      <div className="flex size-10 shrink-0 items-center justify-center rounded-full bg-primary font-semibold text-white">
+                      <div className="flex size-10 shrink-0 items-center justify-center rounded-full bg-brand font-semibold text-white">
                         {c.name?.charAt(0).toUpperCase() ?? '?'}
                       </div>
                       <div className="min-w-0 flex-1">

@@ -178,7 +178,7 @@ export default function Settings() {
             <button
               type="submit"
               disabled={pwBusy}
-              className="cursor-pointer rounded-xl bg-primary px-5 py-2.5 text-sm font-medium text-white transition hover:bg-primary-strong disabled:opacity-50"
+              className="cursor-pointer rounded-xl bg-brand px-5 py-2.5 text-sm font-medium text-white transition hover:brightness-110 disabled:opacity-50"
             >
               {pwBusy ? 'Updating…' : 'Update password'}
             </button>
@@ -200,7 +200,7 @@ export default function Settings() {
                 <button
                   type="submit"
                   disabled={busy || !newCat.trim()}
-                  className="inline-flex shrink-0 cursor-pointer items-center gap-1.5 rounded-xl bg-primary px-4 py-2 text-sm font-medium text-white transition hover:bg-primary-strong disabled:opacity-50"
+                  className="inline-flex shrink-0 cursor-pointer items-center gap-1.5 rounded-xl bg-brand px-4 py-2 text-sm font-medium text-white transition hover:brightness-110 disabled:opacity-50"
                 >
                   <Plus size={15} /> Add
                 </button>
@@ -261,7 +261,7 @@ export default function Settings() {
               <ul className="divide-y divide-ink-100">
                 {team.map((u) => (
                   <li key={u.id} className="flex items-center gap-3 py-3">
-                    <div className="flex size-9 shrink-0 items-center justify-center rounded-full bg-primary text-sm font-semibold text-white">
+                    <div className="flex size-9 shrink-0 items-center justify-center rounded-full bg-brand text-sm font-semibold text-white">
                       {(u.full_name ?? u.email).charAt(0).toUpperCase()}
                     </div>
                     <div className="min-w-0 flex-1">

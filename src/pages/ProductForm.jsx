@@ -311,7 +311,7 @@ export default function ProductForm() {
             <button
               type="submit"
               disabled={saving || uploading}
-              className="inline-flex cursor-pointer items-center gap-2 rounded-xl bg-primary px-5 py-2.5 text-sm font-medium text-white transition hover:bg-primary-strong disabled:opacity-50"
+              className="inline-flex cursor-pointer items-center gap-2 rounded-xl bg-brand px-5 py-2.5 text-sm font-medium text-white transition hover:brightness-110 disabled:opacity-50"
             >
               <Save size={16} /> {saving ? 'Saving…' : 'Save'}
             </button>
@@ -609,7 +609,7 @@ export default function ProductForm() {
                       />
                       <div className="min-w-0 flex-1">
                         {i === 0 && (
-                          <span className="rounded-md bg-primary px-1.5 py-0.5 text-[10px] font-semibold uppercase text-white">
+                          <span className="rounded-md bg-brand px-1.5 py-0.5 text-[10px] font-semibold uppercase text-white">
                             Cover
                           </span>
                         )}
@@ -648,7 +648,7 @@ export default function ProductForm() {
         <button
           type="submit"
           disabled={saving || uploading}
-          className="inline-flex w-full cursor-pointer items-center justify-center gap-2 rounded-xl bg-primary px-5 py-3 text-sm font-semibold text-white transition hover:bg-primary-strong disabled:opacity-50"
+          className="inline-flex w-full cursor-pointer items-center justify-center gap-2 rounded-xl bg-brand px-5 py-3 text-sm font-semibold text-white transition hover:brightness-110 disabled:opacity-50"
         >
           <Save size={16} /> {saving ? 'Saving…' : 'Save product'}
         </button>
