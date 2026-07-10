@@ -123,9 +123,21 @@ export default function Finances() {
   const [billUploading, setBillUploading] = useState(false)
   const billRef = useRef(null)
 
-  // sync receipt list whenever the expense modal opens/changes
+  // expense category: dropdown value + custom typed value
+  const [catSelect, setCatSelect] = useState('inventory')
+  const [catCustom, setCatCustom] = useState('')
+
+  // sync modal-scoped state whenever the expense modal opens/changes
   useEffect(() => {
     setReceipts(expenseModal?.receipts ?? [])
+    const cat = expenseModal?.category
+    if (cat && !EXPENSE_CATEGORIES.includes(cat)) {
+      setCatSelect('custom')
+      setCatCustom(cat)
+    } else {
+      setCatSelect(cat ?? 'inventory')
+      setCatCustom('')
+    }
   }, [expenseModal])
 
   async function uploadBills(files) {
@@ -227,9 +239,14 @@ export default function Finances() {
   async function saveExpense(e) {
     e.preventDefault()
     const fd = new FormData(e.target)
+    const category =
+      catSelect === 'custom' ? catCustom.trim() : catSelect
+    if (!category) {
+      return toast('Please choose or type a category.', 'error')
+    }
     const row = {
       description: fd.get('description'),
-      category: (fd.get('category') || '').trim() || 'other',
+      category,
       amount: Number(fd.get('amount')),
       spent_at: fd.get('spent_at'),
       receipts,
@@ -582,19 +599,15 @@ export default function Finances() {
               />
             </Field>
             <div className="grid grid-cols-2 gap-3">
-              <Field label="Category" required hint="Pick one or type your own">
-                <Input
-                  name="category"
-                  required
-                  list="expense-categories"
-                  defaultValue={expenseModal.category ?? 'inventory'}
-                  placeholder="e.g. inventory, rent…"
-                />
-                <datalist id="expense-categories">
+              <Field label="Category" required>
+                <Select value={catSelect} onChange={(e) => setCatSelect(e.target.value)}>
                   {EXPENSE_CATEGORIES.map((c) => (
-                    <option key={c} value={c} />
+                    <option key={c} value={c}>
+                      {c.charAt(0).toUpperCase() + c.slice(1)}
+                    </option>
                   ))}
-                </datalist>
+                  <option value="custom">Custom…</option>
+                </Select>
               </Field>
               <Field label="Amount (LKR)" required>
                 <Input
@@ -609,6 +622,17 @@ export default function Finances() {
                 />
               </Field>
             </div>
+            {catSelect === 'custom' && (
+              <Field label="Custom category" required hint="Type your own category name">
+                <Input
+                  value={catCustom}
+                  onChange={(e) => setCatCustom(e.target.value)}
+                  required
+                  autoFocus
+                  placeholder="e.g. rent, salaries, utilities…"
+                />
+              </Field>
+            )}
             <Field label="Date" required>
               <Input
                 name="spent_at"
