@@ -112,6 +112,10 @@ export default function Finances() {
   const [investments, setInvestments] = useState([])
   const [reloadKey, setReloadKey] = useState(0)
 
+  // all-time totals (independent of the date filter) — for the cash balance
+  const [allRevenue, setAllRevenue] = useState(0)
+  const [allExpenses, setAllExpenses] = useState(0)
+
   // modals
   const [expenseModal, setExpenseModal] = useState(null) // null | {} | row
   const [investModal, setInvestModal] = useState(null)
@@ -195,9 +199,17 @@ export default function Finances() {
         .select('*')
         .order('invested_at', { ascending: false })
 
-      const [oRes, cRes, eRes, iRes] = await Promise.all([oq, cq, eq, iq])
+      // All-time totals for the cash balance (ignore the date filter)
+      const allOq = supabase.from('orders').select('total').in('status', PAID_STATUSES)
+      const allEq = supabase.from('expenses').select('amount')
+
+      const [oRes, cRes, eRes, iRes, allORes, allERes] = await Promise.all([
+        oq, cq, eq, iq, allOq, allEq,
+      ])
       if (cancelled) return
 
+      setAllRevenue((allORes.data ?? []).reduce((s, o) => s + Number(o.total), 0))
+      setAllExpenses((allERes.data ?? []).reduce((s, e) => s + Number(e.amount), 0))
       setRevenue((oRes.data ?? []).reduce((s, o) => s + Number(o.total), 0))
       setCogs(
         (cRes.data ?? []).reduce(
@@ -235,6 +247,10 @@ export default function Finances() {
     return [...m.entries()].sort((a, b) => b[1] - a[1])
   }, [investments])
   const totalInvested = investments.reduce((s, i) => s + Number(i.amount), 0)
+
+  // Cash balance = all money in (investments + revenue) − all money out (expenses).
+  // Always all-time, independent of the date filter above.
+  const balance = totalInvested + allRevenue - allExpenses
 
   async function saveExpense(e) {
     e.preventDefault()
@@ -363,6 +379,41 @@ export default function Finances() {
         </div>
       ) : tab === 'overview' ? (
         <div>
+          {/* Cash balance — all-time money in vs out */}
+          <div className="mb-4 overflow-hidden rounded-2xl bg-brand p-5 text-white shadow-lg sm:p-6">
+            <div className="flex flex-wrap items-start justify-between gap-4">
+              <div>
+                <p className="flex items-center gap-1.5 text-sm font-medium text-blue-100">
+                  <Wallet size={15} /> Cash balance
+                  <span className="rounded-full bg-white/15 px-2 py-0.5 text-[11px]">All time</span>
+                </p>
+                <p className="mt-1.5 font-display text-3xl font-semibold tracking-tight sm:text-4xl">
+                  {formatMoney(balance)}
+                </p>
+                <p className="mt-1 text-xs text-blue-100/80">
+                  Investments + Revenue − Expenses
+                </p>
+              </div>
+              <div className="grid grid-cols-3 gap-4 text-right">
+                <div>
+                  <p className="text-[11px] uppercase tracking-wide text-blue-100/70">Invested</p>
+                  <p className="mt-0.5 font-semibold tabular-nums">{formatMoney(totalInvested)}</p>
+                </div>
+                <div>
+                  <p className="text-[11px] uppercase tracking-wide text-blue-100/70">Revenue</p>
+                  <p className="mt-0.5 font-semibold tabular-nums">{formatMoney(allRevenue)}</p>
+                </div>
+                <div>
+                  <p className="text-[11px] uppercase tracking-wide text-blue-100/70">Expenses</p>
+                  <p className="mt-0.5 font-semibold tabular-nums">−{formatMoney(allExpenses)}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <p className="mb-2 text-xs font-medium uppercase tracking-wide text-ink-400">
+            Selected period
+          </p>
           <div className="grid grid-cols-2 gap-3 sm:gap-4 xl:grid-cols-4">
             <StatCard icon={Banknote} label="Revenue (paid orders)" value={formatMoney(revenue)} tone="green" />
             <StatCard icon={Receipt} label="Expenses" value={formatMoney(totalExpenses)} tone="red" />
