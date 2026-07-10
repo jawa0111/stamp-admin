@@ -294,8 +294,8 @@ export default function Dashboard() {
               <AreaChart data={chartData} margin={{ top: 8, right: 12, left: 0, bottom: 0 }}>
                 <defs>
                   <linearGradient id="rev" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="0%" stopColor="#10b981" stopOpacity={0.25} />
-                    <stop offset="100%" stopColor="#10b981" stopOpacity={0} />
+                    <stop offset="0%" stopColor="#8b5cf6" stopOpacity={0.35} />
+                    <stop offset="100%" stopColor="#8b5cf6" stopOpacity={0} />
                   </linearGradient>
                 </defs>
                 <CartesianGrid strokeDasharray="3 3" stroke="rgba(128,128,140,0.2)" vertical={false} />
@@ -318,8 +318,8 @@ export default function Dashboard() {
                 <Area
                   type="monotone"
                   dataKey="revenue"
-                  stroke="#10b981"
-                  strokeWidth={2}
+                  stroke="#7c3aed"
+                  strokeWidth={2.5}
                   fill="url(#rev)"
                 />
               </AreaChart>
@@ -332,6 +332,12 @@ export default function Dashboard() {
           <div className="h-64 px-2 py-3">
             <ResponsiveContainer width="100%" height="100%">
               <BarChart data={chartData} margin={{ top: 8, right: 12, left: 0, bottom: 0 }}>
+                <defs>
+                  <linearGradient id="ordersBar" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stopColor="#22d3ee" />
+                    <stop offset="100%" stopColor="#2563eb" />
+                  </linearGradient>
+                </defs>
                 <CartesianGrid strokeDasharray="3 3" stroke="rgba(128,128,140,0.2)" vertical={false} />
                 <XAxis
                   dataKey="day"
@@ -349,7 +355,7 @@ export default function Dashboard() {
                   width={32}
                 />
                 <Tooltip content={<ChartTooltip />} />
-                <Bar dataKey="orders" fill="#6366f1" radius={[4, 4, 0, 0]} maxBarSize={18} />
+                <Bar dataKey="orders" fill="url(#ordersBar)" radius={[5, 5, 0, 0]} maxBarSize={18} />
               </BarChart>
             </ResponsiveContainer>
           </div>
