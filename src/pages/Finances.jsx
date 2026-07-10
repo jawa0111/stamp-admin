@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { supabase } from '../lib/supabase'
 import { useAuth } from '../context/AuthContext'
 import { useToast } from '../context/ToastContext'
@@ -21,6 +21,9 @@ import {
   Trash2,
   Package,
   Wallet,
+  UploadCloud,
+  X,
+  Paperclip,
 } from 'lucide-react'
 
 const EXPENSE_CATEGORIES = ['inventory', 'packaging', 'ads', 'delivery', 'other']
@@ -115,6 +118,37 @@ export default function Finances() {
   const [deleting, setDeleting] = useState(null) // { table, row }
   const [busy, setBusy] = useState(false)
 
+  // expense receipt/bill uploads
+  const [receipts, setReceipts] = useState([])
+  const [billUploading, setBillUploading] = useState(false)
+  const billRef = useRef(null)
+
+  // sync receipt list whenever the expense modal opens/changes
+  useEffect(() => {
+    setReceipts(expenseModal?.receipts ?? [])
+  }, [expenseModal])
+
+  async function uploadBills(files) {
+    if (!files?.length) return
+    setBillUploading(true)
+    const urls = []
+    for (const file of files) {
+      const ext = file.name.split('.').pop()?.toLowerCase() || 'jpg'
+      const path = `${Date.now()}-${Math.random().toString(36).slice(2, 8)}.${ext}`
+      const { error } = await supabase.storage
+        .from('expense-bills')
+        .upload(path, file, { cacheControl: '31536000', upsert: false })
+      if (error) {
+        toast(`Upload failed: ${error.message}`, 'error')
+        continue
+      }
+      const { data } = supabase.storage.from('expense-bills').getPublicUrl(path)
+      urls.push(data.publicUrl)
+    }
+    if (urls.length) setReceipts((r) => [...r, ...urls])
+    setBillUploading(false)
+  }
+
   const range = useMemo(() => {
     if (preset === 'custom') return { from: customFrom || null, to: customTo || null }
     return rangeForPreset(preset)
@@ -195,9 +229,10 @@ export default function Finances() {
     const fd = new FormData(e.target)
     const row = {
       description: fd.get('description'),
-      category: fd.get('category'),
+      category: (fd.get('category') || '').trim() || 'other',
       amount: Number(fd.get('amount')),
       spent_at: fd.get('spent_at'),
+      receipts,
     }
     setBusy(true)
     const res = expenseModal.id
@@ -421,6 +456,14 @@ export default function Finances() {
                       <div className="mt-1 flex items-center gap-2">
                         <CategoryChip category={x.category} />
                         <span className="text-xs text-ink-400">{formatDate(x.spent_at)}</span>
+                        {x.receipts?.length > 0 && (
+                          <span
+                            className="inline-flex items-center gap-0.5 text-xs text-ink-400"
+                            title={`${x.receipts.length} bill${x.receipts.length > 1 ? 's' : ''} attached`}
+                          >
+                            <Paperclip size={12} /> {x.receipts.length}
+                          </span>
+                        )}
                       </div>
                     </div>
                     <span className="font-semibold tabular-nums">{formatMoney(x.amount)}</span>
@@ -539,14 +582,19 @@ export default function Finances() {
               />
             </Field>
             <div className="grid grid-cols-2 gap-3">
-              <Field label="Category" required>
-                <Select name="category" required defaultValue={expenseModal.category ?? 'inventory'}>
+              <Field label="Category" required hint="Pick one or type your own">
+                <Input
+                  name="category"
+                  required
+                  list="expense-categories"
+                  defaultValue={expenseModal.category ?? 'inventory'}
+                  placeholder="e.g. inventory, rent…"
+                />
+                <datalist id="expense-categories">
                   {EXPENSE_CATEGORIES.map((c) => (
-                    <option key={c} value={c} className="capitalize">
-                      {c.charAt(0).toUpperCase() + c.slice(1)}
-                    </option>
+                    <option key={c} value={c} />
                   ))}
-                </Select>
+                </datalist>
               </Field>
               <Field label="Amount (LKR)" required>
                 <Input
@@ -569,6 +617,61 @@ export default function Finances() {
                 defaultValue={expenseModal.spent_at ?? new Date().toISOString().slice(0, 10)}
               />
             </Field>
+
+            {/* Optional bill / receipt images */}
+            <div>
+              <span className="mb-1.5 block text-[13px] font-medium text-ink-700">
+                Bills / receipts{' '}
+                <span className="font-normal text-ink-400">(optional)</span>
+              </span>
+              <button
+                type="button"
+                onClick={() => billRef.current?.click()}
+                disabled={billUploading}
+                className="flex w-full cursor-pointer flex-col items-center gap-1.5 rounded-xl border-2 border-dashed border-ink-300 bg-ink-50 px-4 py-5 text-ink-500 transition hover:border-ink-400 hover:bg-ink-100 disabled:opacity-50"
+              >
+                {billUploading ? <Spinner size={20} /> : <UploadCloud size={22} />}
+                <span className="text-sm font-medium">
+                  {billUploading ? 'Uploading…' : 'Upload bill images'}
+                </span>
+                <span className="text-xs text-ink-400">Add one or more · JPG, PNG</span>
+              </button>
+              <input
+                ref={billRef}
+                type="file"
+                accept="image/*"
+                multiple
+                className="hidden"
+                onChange={(e) => {
+                  uploadBills([...e.target.files])
+                  e.target.value = ''
+                }}
+              />
+
+              {receipts.length > 0 && (
+                <div className="mt-3 grid grid-cols-4 gap-2 sm:grid-cols-5">
+                  {receipts.map((url) => (
+                    <div
+                      key={url}
+                      className="group relative aspect-square overflow-hidden rounded-lg border border-ink-200"
+                    >
+                      <a href={url} target="_blank" rel="noreferrer">
+                        <img src={url} alt="Receipt" className="size-full object-cover" />
+                      </a>
+                      <button
+                        type="button"
+                        onClick={() => setReceipts((r) => r.filter((u) => u !== url))}
+                        className="absolute right-1 top-1 cursor-pointer rounded-md bg-black/60 p-1 text-white opacity-0 transition group-hover:opacity-100"
+                        aria-label="Remove receipt"
+                      >
+                        <X size={13} />
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+
             <div className="flex justify-end gap-2 pt-1">
               <button
                 type="button"
@@ -579,7 +682,7 @@ export default function Finances() {
               </button>
               <button
                 type="submit"
-                disabled={busy}
+                disabled={busy || billUploading}
                 className="cursor-pointer rounded-xl bg-brand px-5 py-2 text-sm font-medium text-white transition hover:brightness-110 disabled:opacity-50"
               >
                 {busy ? 'Saving…' : 'Save expense'}
