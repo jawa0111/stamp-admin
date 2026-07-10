@@ -6,6 +6,7 @@ import { formatDate, slugify } from '../lib/format'
 import PageHeader, { Card, CardHeader } from '../components/ui/PageHeader'
 import { Field, Input } from '../components/ui/Field'
 import ConfirmDialog from '../components/ui/ConfirmDialog'
+import HeroVideoSettings from '../components/HeroVideoSettings'
 import {
   KeyRound,
   Plus,
@@ -290,6 +291,8 @@ export default function Settings() {
             </div>
           </Card>
         )}
+
+        {isAdmin && <HeroVideoSettings />}
       </div>
 
       <ConfirmDialog
