@@ -8,6 +8,7 @@ import Login from './pages/Login'
 import Dashboard from './pages/Dashboard'
 import Orders from './pages/Orders'
 import OrderDetail from './pages/OrderDetail'
+import OrderForm from './pages/OrderForm'
 import Products from './pages/Products'
 import ProductForm from './pages/ProductForm'
 import Customers from './pages/Customers'
@@ -32,6 +33,7 @@ export default function App() {
             >
               <Route index element={<Dashboard />} />
               <Route path="orders" element={<Orders />} />
+              <Route path="orders/new" element={<OrderForm />} />
               <Route path="orders/:id" element={<OrderDetail />} />
               <Route path="products" element={<Products />} />
               <Route path="products/new" element={<ProductForm />} />

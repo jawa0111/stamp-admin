@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { supabase } from '../lib/supabase'
 import { formatMoney, formatDateTime } from '../lib/format'
 import { rangeForPreset, rangeToTimestamps } from '../lib/dates'
@@ -10,7 +10,7 @@ import Spinner from '../components/ui/Spinner'
 import EmptyState from '../components/ui/EmptyState'
 import Pagination from '../components/ui/Pagination'
 import { Input, Select } from '../components/ui/Field'
-import { Search, ShoppingBag, ArrowUpDown } from 'lucide-react'
+import { Search, ShoppingBag, ArrowUpDown, Plus } from 'lucide-react'
 
 const PAGE_SIZE = 25
 
@@ -97,7 +97,18 @@ export default function Orders() {
 
   return (
     <div>
-      <PageHeader title="Orders" subtitle={`${total} order${total === 1 ? '' : 's'}`} />
+      <PageHeader
+        title="Orders"
+        subtitle={`${total} order${total === 1 ? '' : 's'}`}
+        actions={
+          <Link
+            to="/orders/new"
+            className="inline-flex items-center gap-2 rounded-xl bg-brand px-4 py-2.5 text-sm font-medium text-white transition hover:brightness-110"
+          >
+            <Plus size={16} /> New order
+          </Link>
+        }
+      />
 
       {/* Filters */}
       <Card className="mb-4 p-3 sm:p-4">
