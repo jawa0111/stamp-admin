@@ -33,7 +33,7 @@ export default function Login() {
   }
 
   return (
-    <div className="flex min-h-dvh items-center justify-center bg-ink-950 px-4 py-10">
+    <div className="flex min-h-dvh items-center justify-center bg-zinc-950 px-4 py-10">
       {/* subtle backdrop pattern */}
       <div
         aria-hidden
@@ -46,13 +46,13 @@ export default function Login() {
       />
       <div className="relative w-full max-w-sm">
         <div className="mb-8 text-center">
-          <div className="mx-auto mb-4 flex size-14 items-center justify-center rounded-2xl bg-white font-display text-2xl font-bold text-ink-950 shadow-lg">
+          <div className="mx-auto mb-4 flex size-14 items-center justify-center rounded-2xl bg-white font-display text-2xl font-bold text-zinc-950 shadow-lg">
             S
           </div>
           <h1 className="font-display text-2xl font-semibold tracking-tight text-white">
             STAMP Admin
           </h1>
-          <p className="mt-1 text-sm text-ink-400">
+          <p className="mt-1 text-sm text-zinc-400">
             Sign in to manage your store
           </p>
         </div>
@@ -87,7 +87,7 @@ export default function Login() {
               <button
                 type="button"
                 onClick={() => setShowPw((v) => !v)}
-                className="absolute inset-y-0 right-0 flex cursor-pointer items-center px-3 text-ink-400 transition hover:text-ink-700"
+                className="absolute inset-y-0 right-0 flex cursor-pointer items-center px-3 text-zinc-400 transition hover:text-zinc-700"
                 aria-label={showPw ? 'Hide password' : 'Show password'}
               >
                 {showPw ? <EyeOff size={17} /> : <Eye size={17} />}
@@ -104,13 +104,13 @@ export default function Login() {
           <button
             type="submit"
             disabled={busy}
-            className="flex w-full cursor-pointer items-center justify-center gap-2 rounded-xl bg-ink-950 px-4 py-3 text-sm font-semibold text-white transition hover:bg-ink-800 disabled:opacity-60"
+            className="flex w-full cursor-pointer items-center justify-center gap-2 rounded-xl bg-zinc-950 px-4 py-3 text-sm font-semibold text-white transition hover:bg-zinc-800 disabled:opacity-60"
           >
             {busy ? <Loader2 size={16} className="animate-spin" /> : <Lock size={15} />}
             {busy ? 'Signing in…' : 'Sign in'}
           </button>
 
-          <p className="text-center text-xs text-ink-400">
+          <p className="text-center text-xs text-zinc-400">
             Admin access only. Accounts are created by an administrator.
           </p>
         </form>

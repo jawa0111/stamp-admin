@@ -149,7 +149,7 @@ export default function OrderDetail() {
         actions={
           <button
             onClick={() => window.print()}
-            className="inline-flex cursor-pointer items-center gap-2 rounded-xl border border-ink-200 bg-white px-4 py-2.5 text-sm font-medium transition hover:bg-ink-100"
+            className="inline-flex cursor-pointer items-center gap-2 rounded-xl border border-ink-200 bg-surface px-4 py-2.5 text-sm font-medium transition hover:bg-ink-100"
           >
             <Printer size={16} /> Print invoice
           </button>
@@ -173,8 +173,8 @@ export default function OrderDetail() {
                       onClick={() => updateStatus(s)}
                       className={`cursor-pointer rounded-xl px-3.5 py-2 text-sm font-medium transition disabled:opacity-50 ${
                         destructive
-                          ? 'border border-red-200 bg-red-50 text-red-700 hover:bg-red-100'
-                          : 'bg-ink-900 text-white hover:bg-ink-700'
+                          ? 'border border-red-200 dark:border-red-500/30 bg-red-50 dark:bg-red-500/10 text-red-700 dark:text-red-400 hover:bg-red-100 dark:bg-red-500/15'
+                          : 'bg-primary text-white hover:bg-primary-strong'
                       }`}
                     >
                       {STATUS_META[s].label}
@@ -265,7 +265,7 @@ export default function OrderDetail() {
                 <dd className="tabular-nums">{formatMoney(order.shipping_fee)}</dd>
               </div>
               {Number(order.discount) > 0 && (
-                <div className="flex justify-between text-emerald-600">
+                <div className="flex justify-between text-emerald-600 dark:text-emerald-400">
                   <dt>Discount</dt>
                   <dd className="tabular-nums">−{formatMoney(order.discount)}</dd>
                 </div>
@@ -343,7 +343,7 @@ export default function OrderDetail() {
             <button
               onClick={saveNotes}
               disabled={savingNotes || notes === (order.notes ?? '')}
-              className="mt-2.5 inline-flex cursor-pointer items-center gap-2 rounded-xl bg-ink-900 px-4 py-2 text-sm font-medium text-white transition hover:bg-ink-700 disabled:opacity-40"
+              className="mt-2.5 inline-flex cursor-pointer items-center gap-2 rounded-xl bg-primary px-4 py-2 text-sm font-medium text-white transition hover:bg-primary-strong disabled:opacity-40"
             >
               <Save size={15} /> {savingNotes ? 'Saving…' : 'Save notes'}
             </button>

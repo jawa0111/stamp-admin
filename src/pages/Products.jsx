@@ -125,7 +125,7 @@ export default function Products() {
         actions={
           <Link
             to="/products/new"
-            className="inline-flex items-center gap-2 rounded-xl bg-ink-900 px-4 py-2.5 text-sm font-medium text-white transition hover:bg-ink-700"
+            className="inline-flex items-center gap-2 rounded-xl bg-primary px-4 py-2.5 text-sm font-medium text-white transition hover:bg-primary-strong"
           >
             <Plus size={16} /> New product
           </Link>
@@ -175,7 +175,7 @@ export default function Products() {
           action={
             <Link
               to="/products/new"
-              className="inline-flex items-center gap-2 rounded-xl bg-ink-900 px-4 py-2.5 text-sm font-medium text-white transition hover:bg-ink-700"
+              className="inline-flex items-center gap-2 rounded-xl bg-primary px-4 py-2.5 text-sm font-medium text-white transition hover:bg-primary-strong"
             >
               <Plus size={16} /> New product
             </Link>
@@ -206,7 +206,7 @@ export default function Products() {
                   )}
                   <div className="absolute left-2 top-2 flex flex-col gap-1.5">
                     {p.is_archived ? (
-                      <span className="rounded-full bg-ink-900/80 px-2 py-0.5 text-[11px] font-medium text-white backdrop-blur">
+                      <span className="rounded-full bg-primary/80 px-2 py-0.5 text-[11px] font-medium text-white backdrop-blur">
                         Archived
                       </span>
                     ) : !p.is_published ? (
@@ -215,7 +215,7 @@ export default function Products() {
                       </span>
                     ) : null}
                     {p.tag && (
-                      <span className="rounded-full bg-white/90 px-2 py-0.5 text-[11px] font-medium text-ink-900 backdrop-blur">
+                      <span className="rounded-full bg-surface/90 px-2 py-0.5 text-[11px] font-medium text-ink-900 backdrop-blur">
                         {p.tag}
                       </span>
                     )}
@@ -258,7 +258,7 @@ export default function Products() {
                       title={p.is_published ? 'Published — click to unpublish' : 'Draft — click to publish'}
                     >
                       <span
-                        className={`absolute top-0.5 size-4.5 rounded-full bg-white shadow transition-all ${
+                        className={`absolute top-0.5 size-4.5 rounded-full bg-surface shadow transition-all ${
                           p.is_published ? 'left-5' : 'left-0.5'
                         }`}
                       />
@@ -273,7 +273,7 @@ export default function Products() {
                       </Link>
                       <button
                         onClick={() => setDeleting(p)}
-                        className="cursor-pointer rounded-lg p-1.5 text-ink-400 transition hover:bg-red-50 hover:text-red-600"
+                        className="cursor-pointer rounded-lg p-1.5 text-ink-400 transition hover:bg-red-50 dark:hover:bg-red-500/15 dark:bg-red-500/10 hover:text-red-600 dark:text-red-400"
                         aria-label={`Delete ${p.title}`}
                       >
                         <Trash2 size={15} />

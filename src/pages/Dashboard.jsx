@@ -37,11 +37,11 @@ const LOW_STOCK_THRESHOLD = 5
 function MetricCard({ icon: Icon, label, value, tone = 'default', sub }) {
   const tones = {
     default: 'bg-ink-100 text-ink-600',
-    green: 'bg-emerald-100 text-emerald-600',
-    amber: 'bg-amber-100 text-amber-600',
-    blue: 'bg-sky-100 text-sky-600',
-    violet: 'bg-violet-100 text-violet-600',
-    red: 'bg-red-100 text-red-600',
+    green: 'bg-emerald-100 dark:bg-emerald-500/15 text-emerald-600 dark:text-emerald-400',
+    amber: 'bg-amber-100 dark:bg-amber-500/15 text-amber-600 dark:text-amber-400',
+    blue: 'bg-sky-100 dark:bg-sky-500/15 text-sky-600 dark:text-sky-400',
+    violet: 'bg-violet-100 dark:bg-violet-500/15 text-violet-600 dark:text-violet-400',
+    red: 'bg-red-100 dark:bg-red-500/15 text-red-600 dark:text-red-400',
   }
   return (
     <Card className="p-4 sm:p-5">
@@ -64,7 +64,7 @@ function MetricCard({ icon: Icon, label, value, tone = 'default', sub }) {
 function ChartTooltip({ active, payload, label, money = false }) {
   if (!active || !payload?.length) return null
   return (
-    <div className="rounded-xl border border-ink-200 bg-white px-3 py-2 text-xs shadow-lg">
+    <div className="rounded-xl border border-ink-200 bg-surface px-3 py-2 text-xs shadow-lg">
       <p className="mb-1 font-medium text-ink-500">{label}</p>
       {payload.map((p) => (
         <p key={p.dataKey} className="font-semibold text-ink-900">
@@ -272,7 +272,7 @@ export default function Dashboard() {
                     <stop offset="100%" stopColor="#10b981" stopOpacity={0} />
                   </linearGradient>
                 </defs>
-                <CartesianGrid strokeDasharray="3 3" stroke="#e4e4e7" vertical={false} />
+                <CartesianGrid strokeDasharray="3 3" stroke="rgba(128,128,140,0.2)" vertical={false} />
                 <XAxis
                   dataKey="day"
                   tick={{ fontSize: 11, fill: '#a1a1aa' }}
@@ -306,7 +306,7 @@ export default function Dashboard() {
           <div className="h-64 px-2 py-3">
             <ResponsiveContainer width="100%" height="100%">
               <BarChart data={chartData} margin={{ top: 8, right: 12, left: 0, bottom: 0 }}>
-                <CartesianGrid strokeDasharray="3 3" stroke="#e4e4e7" vertical={false} />
+                <CartesianGrid strokeDasharray="3 3" stroke="rgba(128,128,140,0.2)" vertical={false} />
                 <XAxis
                   dataKey="day"
                   tick={{ fontSize: 11, fill: '#a1a1aa' }}
@@ -323,7 +323,7 @@ export default function Dashboard() {
                   width={32}
                 />
                 <Tooltip content={<ChartTooltip />} />
-                <Bar dataKey="orders" fill="#18181b" radius={[4, 4, 0, 0]} maxBarSize={18} />
+                <Bar dataKey="orders" fill="#6366f1" radius={[4, 4, 0, 0]} maxBarSize={18} />
               </BarChart>
             </ResponsiveContainer>
           </div>
@@ -430,8 +430,8 @@ export default function Dashboard() {
                     <span
                       className={`rounded-full px-2 py-0.5 text-xs font-semibold ${
                         v.stock === 0
-                          ? 'bg-red-100 text-red-700'
-                          : 'bg-amber-100 text-amber-700'
+                          ? 'bg-red-100 dark:bg-red-500/15 text-red-700 dark:text-red-400'
+                          : 'bg-amber-100 dark:bg-amber-500/15 text-amber-700 dark:text-amber-400'
                       }`}
                     >
                       {v.stock === 0 ? 'Out' : `${v.stock} left`}

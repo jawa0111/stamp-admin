@@ -12,7 +12,7 @@ export default function PageHeader({ title, subtitle, actions }) {
 
 export function Card({ children, className = '' }) {
   return (
-    <div className={`rounded-2xl border border-ink-200 bg-white shadow-sm ${className}`}>
+    <div className={`rounded-2xl border border-ink-200 bg-surface shadow-sm ${className}`}>
       {children}
     </div>
   )

@@ -1,9 +1,13 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 @theme {
   --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
   --font-display: "Space Grotesk", "Inter", ui-sans-serif, system-ui, sans-serif;
 
+  /* Neutral scale — LIGHT values. Flipped under .dark below so that
+     text-ink-900 (dark text) automatically becomes light in dark mode. */
   --color-ink-50: #fafafa;
   --color-ink-100: #f4f4f5;
   --color-ink-200: #e4e4e7;
@@ -16,11 +20,40 @@
   --color-ink-900: #18181b;
   --color-ink-950: #09090b;
 
-  --color-accent-50: #fffbeb;
-  --color-accent-100: #fef3c7;
-  --color-accent-400: #fbbf24;
+  /* Semantic surfaces (theme-aware) */
+  --color-canvas: #f4f4f6;   /* page background */
+  --color-surface: #ffffff;  /* cards, inputs, modals */
+
+  /* Brand accent — readable with white text on both light & dark pages */
+  --color-primary: #4f46e5;        /* indigo-600 */
+  --color-primary-strong: #4338ca; /* indigo-700 hover */
+  --color-primary-soft: #eef2ff;   /* indigo-50 tint */
+
   --color-accent-500: #f59e0b;
   --color-accent-600: #d97706;
+}
+
+.dark {
+  --color-ink-50: #1b1b20;
+  --color-ink-100: #26262c;
+  --color-ink-200: #33333b;
+  --color-ink-300: #44444d;
+  --color-ink-400: #8b8b96;
+  --color-ink-500: #a3a3ad;
+  --color-ink-600: #c2c2ca;
+  --color-ink-700: #d6d6dd;
+  --color-ink-800: #e7e7eb;
+  --color-ink-900: #f3f3f5;
+  --color-ink-950: #fafafa;
+
+  --color-canvas: #0b0b0e;
+  --color-surface: #17171c;
+
+  --color-primary: #6366f1;        /* indigo-500 — brighter on dark */
+  --color-primary-strong: #818cf8; /* indigo-400 */
+  --color-primary-soft: #26263f;
+
+  color-scheme: dark;
 }
 
 html {
@@ -29,8 +62,9 @@ html {
 }
 
 body {
-  background-color: var(--color-ink-100);
+  background-color: var(--color-canvas);
   color: var(--color-ink-900);
+  transition: background-color 200ms ease;
 }
 
 /* thin scrollbars */
@@ -46,9 +80,9 @@ body {
   }
 }
 
-/* print: only show invoice area */
+/* print: only show invoice area, always on white */
 @media print {
-  body { background: white; }
+  body { background: white; color: #18181b; }
   .no-print { display: none !important; }
   .print-area {
     position: absolute;
@@ -57,5 +91,6 @@ body {
     padding: 24px !important;
     box-shadow: none !important;
     border: none !important;
+    background: white !important;
   }
 }

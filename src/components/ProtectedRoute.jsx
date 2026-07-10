@@ -23,7 +23,7 @@ export default function ProtectedRoute({ children, adminOnly = false }) {
   if (!profile) {
     return (
       <div className="flex min-h-dvh flex-col items-center justify-center gap-4 bg-ink-100 px-6 text-center">
-        <div className="flex size-14 items-center justify-center rounded-2xl bg-red-100 text-red-600">
+        <div className="flex size-14 items-center justify-center rounded-2xl bg-red-100 dark:bg-red-500/15 text-red-600 dark:text-red-400">
           <ShieldAlert size={28} />
         </div>
         <h1 className="font-display text-xl font-semibold">Access denied</h1>
@@ -33,7 +33,7 @@ export default function ProtectedRoute({ children, adminOnly = false }) {
         </p>
         <button
           onClick={signOut}
-          className="mt-2 inline-flex cursor-pointer items-center gap-2 rounded-xl bg-ink-900 px-4 py-2.5 text-sm font-medium text-white transition hover:bg-ink-700"
+          className="mt-2 inline-flex cursor-pointer items-center gap-2 rounded-xl bg-primary px-4 py-2.5 text-sm font-medium text-white transition hover:bg-primary-strong"
         >
           <LogOut size={16} /> Sign out
         </button>

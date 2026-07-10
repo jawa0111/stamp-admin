@@ -33,7 +33,7 @@ export default function StatusSelect({ order, onUpdated }) {
       disabled={busy}
       onClick={(e) => e.stopPropagation()}
       onChange={(e) => update(e.target.value)}
-      className="cursor-pointer rounded-lg border border-ink-200 bg-white px-2 py-1.5 text-xs font-medium text-ink-600 transition hover:border-ink-400 focus:outline-none focus:ring-2 focus:ring-ink-900/10 disabled:opacity-50"
+      className="cursor-pointer rounded-lg border border-ink-200 bg-surface px-2 py-1.5 text-xs font-medium text-ink-600 transition hover:border-ink-400 focus:outline-none focus:ring-2 focus:ring-ink-900/10 disabled:opacity-50"
       aria-label={`Update status of ${order.order_number}`}
     >
       <option value="" disabled>
