@@ -294,8 +294,8 @@ export default function Dashboard() {
               <AreaChart data={chartData} margin={{ top: 8, right: 12, left: 0, bottom: 0 }}>
                 <defs>
                   <linearGradient id="rev" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="0%" stopColor="#8b5cf6" stopOpacity={0.35} />
-                    <stop offset="100%" stopColor="#8b5cf6" stopOpacity={0} />
+                    <stop offset="0%" stopColor="#0a3a9c" stopOpacity={0.35} />
+                    <stop offset="100%" stopColor="#0a3a9c" stopOpacity={0} />
                   </linearGradient>
                 </defs>
                 <CartesianGrid strokeDasharray="3 3" stroke="rgba(128,128,140,0.2)" vertical={false} />
@@ -318,7 +318,7 @@ export default function Dashboard() {
                 <Area
                   type="monotone"
                   dataKey="revenue"
-                  stroke="#7c3aed"
+                  stroke="#0a3a9c"
                   strokeWidth={2.5}
                   fill="url(#rev)"
                 />
@@ -334,8 +334,8 @@ export default function Dashboard() {
               <BarChart data={chartData} margin={{ top: 8, right: 12, left: 0, bottom: 0 }}>
                 <defs>
                   <linearGradient id="ordersBar" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="0%" stopColor="#22d3ee" />
-                    <stop offset="100%" stopColor="#2563eb" />
+                    <stop offset="0%" stopColor="#0a3a9c" />
+                    <stop offset="100%" stopColor="#06236b" />
                   </linearGradient>
                 </defs>
                 <CartesianGrid strokeDasharray="3 3" stroke="rgba(128,128,140,0.2)" vertical={false} />
