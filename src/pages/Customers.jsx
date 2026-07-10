@@ -101,7 +101,7 @@ export default function Customers() {
           <Card className="hidden overflow-hidden md:block">
             <table className="w-full text-sm">
               <thead>
-                <tr className="border-b border-ink-200 bg-ink-50 text-left text-xs uppercase tracking-wide text-ink-500">
+                <tr className="border-b border-blue-950 bg-gradient-to-b from-blue-700 via-blue-800 to-blue-950 text-left text-xs uppercase tracking-wide text-blue-100 shadow-sm">
                   <th className="px-5 py-3 font-medium">Customer</th>
                   <th className="px-4 py-3 font-medium">Contact</th>
                   <th className="px-4 py-3 text-right font-medium">Orders</th>
