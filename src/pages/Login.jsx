@@ -104,7 +104,7 @@ export default function Login() {
           <button
             type="submit"
             disabled={busy}
-            className="flex w-full cursor-pointer items-center justify-center gap-2 rounded-xl bg-zinc-950 px-4 py-3 text-sm font-semibold text-white transition hover:bg-zinc-800 disabled:opacity-60"
+            className="flex w-full cursor-pointer items-center justify-center gap-2 rounded-xl bg-primary px-4 py-3 text-sm font-semibold text-white transition hover:bg-primary-strong disabled:opacity-60"
           >
             {busy ? <Loader2 size={16} className="animate-spin" /> : <Lock size={15} />}
             {busy ? 'Signing in…' : 'Sign in'}
